@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arpiedi - Calzado Ortopédico a Medida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light gray background */
+        }
+        .hero-section {
+            background-image: url('https://placehold.co/1920x800/E0F2F7/2C3E50?text=Calzado+Ortopédico+a+Medida'); /* Placeholder for a hero image */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #2C3E50; /* Dark blue accent */
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800">Arpiedi®</a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Inicio</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Modelos Señora</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Modelos Caballero</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Novedades</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Sobre Nosotros</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section h-screen flex items-center justify-center text-center px-4">
+        <div class="bg-black bg-opacity-40 p-8 rounded-lg shadow-xl max-w-2xl">
+            <h1 class="text-5xl font-extrabold mb-4 leading-tight">Calzado Ortopédico a Medida</h1>
+            <p class="text-xl mb-8">
+                En Arpiedi, combinamos la tradición artesanal con la innovación para ofrecerte calzado que se adapta perfectamente a tus necesidades, garantizando comodidad y salud podal.
+            </p>
+            <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                Descubre Nuestros Modelos
+            </a>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-12 section-title">Nuestros Valores</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9.75 18.75c0 .621.504 1.125 1.125 1.125H16.5a1.125 1.125 0 001.125-1.125v-1.5m-1.125 1.125h-6.75m6.75 0l-3.077-3.077m3.077 3.077H15m3.077-3.077l-3.077-3.077m3.077 3.077V9.75m6 0a2.25 2.25 0 00-2.25-2.25H15V2.25A2.25 2.25 0 0012.75 0h-1.5A2.25 2.25 0 009 2.25v3.375c0 .621.504 1.125 1.125 1.125h1.5a1.125 1.125 0 001.125-1.125V2.25m6.75 0h-3.75a2.25 2.25 0 00-2.25 2.25V9.75m0 0a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v3.375c0 .621.504 1.125 1.125 1.125h1.5a1.125 1.125 0 001.125-1.125V9.75m6.75 0h-3.75a2.25 2.25 0 00-2.25 2.25V15m0 0a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v3.375c0 .621.504 1.125 1.125 1.125h1.5a1.125 1.125 0 001.125-1.125V15" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3">Calidad Superior</h3>
+                    <p class="text-gray-600">Utilizamos solo materiales de primera calidad y tecnología de vanguardia para un calzado duradero y eficaz.</p>
+                </div>
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3">Confort Inigualable</h3>
+                    <p class="text-gray-600">Diseñamos cada par pensando en tu comodidad, adaptándonos a la morfología única de tu pie.</p>
+                </div>
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-blue-600 text-5xl mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.124A2.25 2.25 0 012.25 18c0-.827.468-1.584 1.215-1.956m5.56-.475a3 3 0 005.78 1.124A2.25 2.25 0 0021.75 18c0-.827-.468-1.584-1.215-1.956m-9.955-7.84a3 3 0 11-1.24-2.527m1.24 2.527A3 3 0 1115 6.75H9a3 3 0 002.841 2.527z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-700 mb-3">Diseño a Medida</h3>
+                    <p class="text-gray-600">Ofrecemos una extensa gama de modelos personalizados que se adecúan a las necesidades individuales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-12 section-title">Explora Nuestros Modelos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="relative group rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/800x600/F0F8FF/2C3E50?text=Modelos+Señora" alt="Modelos Señora" class="w-full h-96 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h3 class="text-4xl font-bold text-white">Modelos Señora</h3>
+                    </div>
+                    <a href="#" class="absolute inset-0 z-10"></a>
+                </div>
+                <div class="relative group rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/800x600/E6E6FA/2C3E50?text=Modelos+Caballero" alt="Modelos Caballero" class="w-full h-96 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h3 class="text-4xl font-bold text-white">Modelos Caballero</h3>
+                    </div>
+                    <a href="#" class="absolute inset-0 z-10"></a>
+                </div>
+            </div>
+            <div class="mt-12">
+                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                    Ver Todas las Novedades
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-12 section-title">Sobre Nosotros</h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                Arpiedi es una marca especializada en la confección de zapatos ortopédicos a medida. Nuestra misión es proporcionar calzado de primera calidad que no solo sea cómodo, sino que también contribuya a la salud podal. Contamos con un equipo de especialistas con años de experiencia en el diseño y elaboración de zapatos que se ajustan de manera óptima a las exigencias de nuestra clientela.
+            </p>
+            <a href="#" class="mt-8 inline-block bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                Conoce Más Sobre Arpiedi
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
+                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
+                <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
