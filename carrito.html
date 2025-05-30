@@ -32,44 +32,44 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem 0;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #eee;
         }
         .cart-item-grid:last-child {
             border-bottom: none;
         }
-        /* Estilos para el select y botón de añadir modelo */
-        .add-model-section {
-            background-color: #fcfcfc;
-            border: 1px solid #e0e0e0;
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quantity-control button {
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.6rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .quantity-control button:hover {
+            background-color: #d0d0d0;
+        }
+        .remove-button {
+            background: none;
+            border: none;
+            color: #ef4444; /* Red-500 */
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .remove-button:hover {
+            color: #dc2626; /* Red-600 */
+        }
+        .summary-box {
+            background-color: #f0f4f8; /* Light blue-gray */
             padding: 1.5rem;
             border-radius: 0.75rem;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: center;
-            justify-content: center;
-        }
-        .add-model-section select {
-            flex-grow: 1;
-            min-width: 200px;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .add-model-section select:focus {
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-            outline: none;
-        }
-        .add-model-section button {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -77,82 +77,71 @@
 
     <section class="bg-white py-4 text-center">
         <a href="index.html" class="block w-full">
-            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI.png" alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
+            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
         </a>
     </section>
 
     <header class="bg-white shadow-md p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-center items-center">
             <nav>
-                <ul class="flex space-x-6">
+                <ul id="main-nav-links" class="flex space-x-6">
                     <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
                     <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
                     <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
                     <li><a href="novedades.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
                     <li><a href="sobre-nosotros.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
                     <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
-                    <li><a href="carrito.html" class="text-blue-700 font-medium text-xl">Carrito o  Medidas</a></li> </ul>
+                    <li><a href="carrito.html" class="text-blue-700 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Tu Carrito de Compras</h1>
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Tu Carrito de Pedido Personalizado</h1>
 
-        <div class="add-model-section">
-            <label for="select_model" class="font-semibold text-gray-700 text-lg">Añadir un nuevo modelo para solicitud:</label>
-            <select id="select_model" class="rounded-md">
-                <option value="">-- Selecciona un modelo --</option>
-                <optgroup label="Modelos Señora">
-                    <option value="mercedes_sport_senora">Mercedes Sport</option>
-                    <option value="blucher_clasico_senora">BLUCHER CLASICO</option>
-                    <option value="deportivo_senora">DEPORTIVO</option>
-                    <option value="menorquinas_senora">MENORQUINAS</option>
-                    <option value="mercedes_senora">MERCEDES</option>
-                    <option value="montalana_senora">MONTALANA</option>
-                    <option value="salon_senora">SALON</option>
-                    <option value="zueco_senora">ZUECO</option>
-                    <option value="bolastico_senora">BOLASTICO</option>
-                    <option value="botipelo_senora">BOTIPELO</option>
-                    <option value="mocasin_antifaz_senora">MOCASIN ANTIFAZ</option>
-                    <option value="walla_senora">WALLA</option>
-                </optgroup>
-                <optgroup label="Modelos Caballero">
-                    <option value="deportivo_jogging_caballero">Deportivo Jogging</option>
-                    <option value="nauticos_caballero">Nauticos</option>
-                    <option value="montana_caballero">Montaña</option>
-                    <option value="botin_elasticos_caballero">Botin Elásticos</option>
-                    <option value="botin_vestir_caballero">Botin Vestir</option>
-                    <option value="botin_yute_caballero">Botin Yute</option>
-                    <option value="doble_hebillas_caballero">DOBLE HEBILLAS</option>
-                    <option value="ingles_sport_caballero">INGLES SPORT</option>
-                    <option value="mocasin_vestir_caballero">Mocasin Vestir</option>
-                    <option value="wallabee_caballero">Wallabee</option>
-                </optgroup>
-            </select>
-            <button onclick="addModelToCart()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
-                Añadir al Carrito / Solicitar
-            </button>
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto text-center">
+            <p class="text-lg text-gray-700 mb-6">
+                Para solicitar tu calzado personalizado, por favor, rellena nuestro formulario de pedido detallado.
+            </p>
+            <p class="text-gray-600 mb-8">
+                Este formulario te permitirá especificar el modelo, materiales, color y vincularlo a tu ficha de toma de medidas. Se abrirá en una nueva ventana.
+            </p>
+
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfH8JhKYBMF79ORnhcC40k1Cc3Ig5VOYX34jB_0RjLSrmdB0g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                Iniciar Solicitud de Pedido
+            </a>
+
+            <p class="text-center text-sm text-gray-500 mt-4">
+                Serás redirigido a Google Forms.
+            </p>
         </div>
 
-        <div class="bg-white p-8 rounded-lg shadow-lg">
-            <div class="cart-item-grid font-semibold text-gray-700 border-b-2 border-gray-300 mb-4 pb-2">
-                <div>Producto</div>
-                <div></div> <div class="text-center">Cantidad</div>
-                <div class="text-right">Precio</div>
-                <div></div> </div>
-
-            <div class="flex justify-end items-center mt-8 pt-4 border-t-2 border-gray-300">
-                <div class="text-right text-xl font-bold text-gray-800">
-                    Subtotal: <span class="ml-4">0.00€</span>
+        <div class="mt-12 p-8 bg-white rounded-lg shadow-lg max-w-3xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 section-title mx-auto">Resumen del Pedido</h2>
+            <p class="text-gray-600 text-center mb-6">
+                Aquí se mostrarían los modelos y cantidades que el cliente ha ido seleccionando para su pedido personalizado. Actualmente, el proceso se gestiona a través del formulario de pedido.
+            </p>
+            <!--
+            <div class="cart-item-grid">
+                <div><img src="ruta/a/imagen_modelo.png" alt="Modelo X" class="w-20 h-20 object-cover rounded-md"></div>
+                <div class="text-left font-medium">Modelo WALLA (Personalizado)</div>
+                <div class="quantity-control">
+                    <button>-</button>
+                    <span>1</span>
+                    <button>+</button>
+                </div>
+                <div class="font-semibold text-gray-900">Consultar Precio</div>
+                <div>
+                    <button class="remove-button">&times;</button>
                 </div>
             </div>
-            <div class="flex justify-end mt-6">
-                <a href="solicitud-medida.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
-                    Proceder a la Solicitud a Medida
-                </a>
+            -->
+            <div class="text-right font-bold text-xl mt-8">
+                <p>Total estimado: Presupuesto Personalizado</p>
             </div>
         </div>
+
     </main>
 
     <footer class="bg-gray-800 text-white py-8 mt-12">
@@ -167,22 +156,31 @@
     </footer>
 
     <script>
-        function addModelToCart() {
-            const selectElement = document.getElementById('select_model');
-            const selectedValue = selectElement.value;
-            const selectedText = selectElement.options[selectElement.selectedIndex].text;
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname.split('/').pop(); // Get the current file name
+            const navLinks = document.querySelectorAll('#main-nav-links a');
 
-            if (selectedValue) {
-                // En un escenario real, aquí se añadiría el producto al estado del carrito
-                // y se actualizaría la interfaz. Para esta simulación, simplemente
-                // redirigimos al formulario de solicitud a medida.
-                // Podrías pasar el modelo seleccionado como parámetro en la URL si fuera necesario.
-                window.location.href = 'solicitud-medida.html?model=' + selectedValue;
-            } else {
-                alert('Por favor, selecciona un modelo para añadir.');
-            }
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split('/').pop();
+                if (linkPath === currentPath) {
+                    link.classList.remove('text-gray-600');
+                    link.classList.add('text-blue-700');
+                } else {
+                    link.classList.remove('text-blue-700');
+                    link.classList.add('text-gray-600');
+                }
+            });
+        });
+
+        // Esta función ahora redirigirá al formulario de pedido en lugar de simular un carrito
+        function addModelToCart() {
+            // alert('Serás redirigido al formulario de Solicitud de Pedido Personalizado.');
+            // Aquí puedes redirigir directamente al nuevo formulario de Google Forms
+            // window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSfH8JhKYBMF79ORnhcC40k1Cc3Ig5VOYX34jB_0RjLSrmdB0g/viewform?usp=sf_link';
+            // Por simplicidad, el botón principal ya hace esto.
         }
     </script>
 
 </body>
 </html>
+
