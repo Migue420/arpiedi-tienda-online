@@ -62,50 +62,59 @@
     <header class="bg-white shadow-md p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-center items-center">
             <nav>
-                <ul class="flex space-x-6">
+                <ul id="main-nav-links" class="flex space-x-6">
                     <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
                     <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
                     <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
                     <li><a href="novedades.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
                     <li><a href="sobre-nosotros.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
-                    <li><a href="contacto.html" class="text-blue-700 font-medium text-xl">Contacto</a></li> <li><a href="carrito.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
+                    <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
+                    <li><a href="carrito.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Contacta con Nosotros</h1>
+        <h1 class="text-4xl font-bold text-gray-800 mb-12 text-center section-title mx-auto">Contáctanos</h1>
 
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Envíanos un Mensaje</h2>
-                <p class="text-gray-700 mb-6">
-                    ¿Tienes alguna pregunta, sugerencia o necesitas ayuda? Rellena el siguiente formulario y nos pondremos en contacto contigo lo antes posible.
-                </p>
-                <form action="/enviar-mensaje" method="POST">
-                    <div class="form-group mb-4">
-                        <label for="contact_name">Tu Nombre:</label>
-                        <input type="text" id="contact_name" name="contact_name" placeholder="Nombre completo" required class="rounded-md">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="contact_email">Tu Correo Electrónico:</label>
-                        <input type="email" id="contact_email" name="contact_email" placeholder="tu.email@ejemplo.com" required class="rounded-md">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="contact_subject">Asunto:</label>
-                        <input type="text" id="contact_subject" name="contact_subject" placeholder="Ej: Consulta de pedido, Medidas" class="rounded-md">
-                    </div>
-                    <div class="form-group mb-6">
-                        <label for="contact_message">Tu Mensaje:</label>
-                        <textarea id="contact_message" name="contact_message" rows="5" placeholder="Escribe tu mensaje aquí..." required class="rounded-md"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                ¿Tienes alguna pregunta o necesitas asistencia? Rellena el siguiente formulario y nos pondremos en contacto contigo lo antes posible.
+            </p>
+
+            <form action="https://formspree.io/f/xnnpregl" method="POST" class="space-y-6">
+                <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                    <input type="text" name="nombre" id="nombre" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                    <input type="email" name="_replyto" id="email" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="asunto" class="block text-sm font-medium text-gray-700 mb-1">Asunto</label>
+                    <input type="text" name="asunto" id="asunto"
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="mensaje" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                    <textarea name="mensaje" id="mensaje" rows="5" required
+                              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit"
+                            class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
                         Enviar Mensaje
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
 
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Nuestros Datos de Contacto</h2>
                 <div class="space-y-4 text-gray-700 text-lg">
@@ -162,5 +171,24 @@
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname.split('/').pop(); // Get the current file name
+            const navLinks = document.querySelectorAll('#main-nav-links a');
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split('/').pop();
+                if (linkPath === currentPath) {
+                    link.classList.remove('text-gray-600');
+                    link.classList.add('text-blue-700');
+                } else {
+                    link.classList.remove('text-blue-700');
+                    link.classList.add('text-gray-600');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
+
