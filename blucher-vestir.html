@@ -95,7 +95,7 @@
             </div>
 
             <div class="md:pl-8">
-                <h1 class="text-4xl font-bold text-gray-800 mb-4">BLUCHER VESTIR</h1>
+                <h1 id="product-name" class="text-4xl font-bold text-gray-800 mb-4">BLUCHER VESTIR</h1>
                 <p class="text-gray-700 text-lg mb-6">El clásico atemporal reinventado para una comodidad excepcional y un soporte superior. Perfecto para cualquier ocasión formal o elegante.</p>
 
                 <div class="mb-6">
@@ -209,9 +209,15 @@
 
         // Función para redirigir al formulario de solicitud a medida
         function redirectToSolicitudMedida() {
-            const productName = document.getElementById('product-name').innerText; // Asegúrate de que el h1 tenga id="product-name"
+            // Asegúrate de que el h1 tenga id="product-name"
+            const productName = document.getElementById('product-name').innerText;
             const encodedProductName = encodeURIComponent(productName);
-            window.location.href = `solicitud-medida.html?model=${encodedProductName}`;
+            // La URL del formulario de Google Forms
+            const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSd2reFhff54penjzZA7jJxY-s2wopFFfc-X8vim7IPMBR5Z1Q/viewform?usp=sf_link";
+            // Puedes añadir el nombre del producto como un campo prellenado si el formulario de Google lo soporta.
+            // Esto requiere conocer el "entry.XXXXXXX" del campo en el formulario.
+            // Por ahora, solo redirigimos a la URL base del formulario.
+            window.location.href = googleFormUrl;
         }
     </script>
 
