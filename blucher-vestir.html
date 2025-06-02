@@ -49,12 +49,12 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-gray-800">Arpiedi®</a>
             <nav>
-                <ul class="flex space-x-6">
+                <ul id="main-nav-links" class="flex space-x-6">
                     <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
                     <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
                     <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
                     <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
-                    <li><a href="componentes-calzado.html" class="text-gray-600 font-medium text-xl">Componentes del Calzado</a></li>
+                    <li><a href="componentes-calzado.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Componentes del Calzado</a></li>
                     <li><a href="cartas-colores.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Cartas de Colores</a></li>
                     <li><a href="sobre-nosotros.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
                     <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
@@ -152,8 +152,8 @@
                     </select>
                 </div>
 
-                <button onclick="redirectToSolicitudMedida()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
-                    Solicitar Calzado a Medida / Contactar
+                <button onclick="redirectToCart()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Solicitar Calzado a Medida / Añadir al Carrito
                 </button>
                 <p class="text-center text-sm text-gray-500 mt-4">Nos pondremos en contacto para gestionar tu pedido personalizado.</p>
             </div>
@@ -174,7 +174,6 @@
     <script>
         function changeMainImage(src) {
             document.getElementById('main-product-image').src = src;
-            // Opcional: cambiar el borde de la miniatura seleccionada
             const thumbnails = document.querySelectorAll('.flex.space-x-2.mt-4 img');
             thumbnails.forEach(thumb => {
                 if (thumb.src === src) {
@@ -188,13 +187,9 @@
         }
 
         function selectColor(element, colorName) {
-            // Remove 'selected' class from all color dots
             const colorDots = document.querySelectorAll('.color-dot');
             colorDots.forEach(dot => dot.classList.remove('selected'));
-            // Add 'selected' class to the clicked color dot
             element.classList.add('selected');
-            // Aquí podrías añadir lógica para cambiar la imagen principal al seleccionar un color,
-            // si tienes imágenes específicas para cada color.
             console.log('Color seleccionado:', colorName);
         }
 
@@ -205,19 +200,28 @@
                 firstThumbnail.classList.add('border-blue-600');
                 firstThumbnail.classList.remove('border-gray-300');
             }
+
+            // Script para resaltar el enlace de navegación activo
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('#main-nav-links a');
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split('/').pop();
+                if (linkPath === currentPath) {
+                    link.classList.remove('text-gray-600');
+                    link.classList.add('text-blue-700');
+                } else {
+                    link.classList.remove('text-blue-700');
+                    link.classList.add('text-gray-600');
+                }
+            });
         });
 
-        // Función para redirigir al formulario de solicitud a medida
-        function redirectToSolicitudMedida() {
-            // Asegúrate de que el h1 tenga id="product-name"
+        // Función para redirigir al carrito con el nombre del producto
+        function redirectToCart() {
             const productName = document.getElementById('product-name').innerText;
             const encodedProductName = encodeURIComponent(productName);
-            // La URL del formulario de Google Forms
-            const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSd2reFhff54penjzZA7jJxY-s2wopFFfc-X8vim7IPMBR5Z1Q/viewform?usp=sf_link";
-            // Puedes añadir el nombre del producto como un campo prellenado si el formulario de Google lo soporta.
-            // Esto requiere conocer el "entry.XXXXXXX" del campo en el formulario.
-            // Por ahora, solo redirigimos a la URL base del formulario.
-            window.location.href = googleFormUrl;
+            window.location.href = `carrito.html?model=${encodedProductName}`;
         }
     </script>
 
