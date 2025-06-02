@@ -152,9 +152,9 @@
                     </select>
                 </div>
 
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                <button onclick="redirectToSolicitudMedida()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
                     Solicitar Calzado a Medida / Contactar
-                <button onclick="https://docs.google.com/forms/d/e/1FAIpQLSd2reFhff54penjzZA7jJxY-s2wopFFfc-X8vim7IPMBR5Z1Q/viewform?usp=sf_link" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                </button>
                 <p class="text-center text-sm text-gray-500 mt-4">Nos pondremos en contacto para gestionar tu pedido personalizado.</p>
             </div>
         </div>
@@ -206,6 +206,13 @@
                 firstThumbnail.classList.remove('border-gray-300');
             }
         });
+
+        // Función para redirigir al formulario de solicitud a medida
+        function redirectToSolicitudMedida() {
+            const productName = document.getElementById('product-name').innerText; // Asegúrate de que el h1 tenga id="product-name"
+            const encodedProductName = encodeURIComponent(productName);
+            window.location.href = `solicitud-medida.html?model=${encodedProductName}`;
+        }
     </script>
 
 </body>
