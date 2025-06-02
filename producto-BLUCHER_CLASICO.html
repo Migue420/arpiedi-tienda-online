@@ -154,8 +154,8 @@
                     </select>
                 </div>
 
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
-                    Solicitar Calzado a Medida / Contactar
+                <button onclick="redirectToCart()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Solicitar Calzado a Medida / Añadir al Carrito
                 </button>
                 <p class="text-center text-sm text-gray-500 mt-4">Nos pondremos en contacto para gestionar tu pedido personalizado.</p>
             </div>
@@ -202,6 +202,13 @@
                 firstThumbnail.classList.remove('border-gray-300');
             }
         });
+        
+    // Función para redirigir al carrito con el nombre del producto
+    function redirectToCart() {
+        const productName = document.getElementById('product-name').innerText;
+        const encodedProductName = encodeURIComponent(productName);
+        window.location.href = `carrito.html?model=${encodedProductName}`;
+    }
     </script>
 
 </body>
