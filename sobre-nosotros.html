@@ -6,6 +6,7 @@
     <title>Arpiedi - Sobre Nosotros</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para los iconos de flecha -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -91,6 +92,23 @@
         .scroll-button.right {
             right: 0.5rem;
         }
+        /* Estilos para el contenedor del video responsivo */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (height / width) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -108,9 +126,9 @@
                     <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
                     <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
                     <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
-                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
-                    <li><a href="cartas-colores.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Cartas de Colores</a></li>
+                    <li><a href="novedades.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
                     <li><a href="componentes-calzado.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Componentes del Calzado</a></li>
+                    <li><a href="cartas-colores.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Cartas de Colores</a></li>
                     <li><a href="sobre-nosotros.html" class="text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
                     <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
                     <li><a href="carrito.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
@@ -123,6 +141,19 @@
         <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Sobre Nosotros</h1>
 
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-6xl mx-auto">
+            <!-- Sección de Video de YouTube -->
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">Conoce Arpiedi en Video</h2>
+            <div class="video-container mx-auto max-w-4xl mb-12">
+                <!-- YouTube video embed code -->
+                <iframe
+                    src="https://www.youtube.com/embed/7dlS83TShUg?si=jihiK3af2FlqC_ip"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
             <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">Nuestra Historia</h2>
             <p class="text-lg text-gray-700 mb-6">
                 En Arpiedi, llevamos décadas dedicados a la fabricación de calzado ortopédico a medida, combinando la artesanía tradicional con las últimas innovaciones tecnológicas. Nuestra pasión es proporcionar soluciones de calzado que no solo corrijan y apoyen, sino que también ofrezcan el máximo confort y estilo.
@@ -144,43 +175,44 @@
                 En Arpiedi, estamos en constante búsqueda de nuevas técnicas y materiales para mejorar nuestros productos. Invertimos en investigación y desarrollo para incorporar avances tecnológicos que nos permitan ofrecer un calzado ortopédico aún más eficaz y cómodo. Nuestro objetivo es que cada paso que des sea una experiencia de confort y bienestar.
             </p>
 
+            <!-- Sección: Proceso de Fabricación de un Cliente de Ejemplo -->
             <h2 class="text-3xl font-bold text-gray-800 mb-6 mt-10 section-title">Proceso de Fabricación de un Cliente de Ejemplo</h2>
             <div class="scroll-wrapper mb-8">
                 <button class="scroll-button left" onclick="scrollHorizontally('proceso-fabricacion-container', -1)">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <div id="proceso-fabricacion-container" class="scroll-container flex pb-4">
-                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-ORIGINAL.webp" target="_blank" class="component-card">
-                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-ORIGINAL.webp" alt="Sandalia Original">
-                        <h2 class="text-xl font-semibold text-gray-800">Sandalia Original</h2>
-                    </a>
-                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/TOMA-MEDIDAS.webp" target="_blank" class="component-card">
-                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/TOMA-MEDIDAS.webp" alt="Toma de Medidas">
-                        <h2 class="text-xl font-semibold text-gray-800">Toma de Medidas</h2>
-                    </a>
-                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/ORIGINAL-Y-COMPONENTES.webp" target="_blank" class="component-card">
-                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/ORIGINAL-Y-COMPONENTES.webp" alt="Original y Completo">
+                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/ORIGINAL-Y-COMP.webp" target="_blank" class="component-card">
+                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/ORIGINAL-Y-COMP.webp" alt="Original y Completo">
                         <h2 class="text-xl font-semibold text-gray-800">Original y Completo</h2>
-                    </a>
-                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-EN-HORMA.webp" target="_blank" class="component-card">
-                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-EN-HORMA.webp" alt="Sandalia en Horma">
-                        <h2 class="text-xl font-semibold text-gray-800">Sandalia en Horma</h2>
-                    </a>
-                    
-                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIAS-TERMINADAS.webp" target="_blank" class="component-card">
-                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIAS-TERMINADAS.webp" alt="Sandalias Terminadas">
-                        <h2 class="text-xl font-semibold text-gray-800">Sandalias Terminadas</h2>
                     </a>
                     <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/PRUEBA-CLIENTE.webp" target="_blank" class="component-card">
                         <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/PRUEBA-CLIENTE.webp" alt="Prueba Cliente">
                         <h2 class="text-xl font-semibold text-gray-800">Prueba Cliente</h2>
                     </a>
-                    
+                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-EN-HOR.webp" target="_blank" class="component-card">
+                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/assets/images/AM-PASTOR/SANDALIA-EN-HOR.webp" alt="Sandalia en Horma">
+                        <h2 class="text-xl font-semibold text-gray-800">Sandalia en Horma</h2>
+                    </a>
+                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-ORIGINA.webp" target="_blank" class="component-card">
+                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIA-ORIGINA.webp" alt="Sandalia Original">
+                        <h2 class="text-xl font-semibold text-gray-800">Sandalia Original</h2>
+                    </a>
+                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIAS-TERMIN.webp" target="_blank" class="component-card">
+                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/SANDALIAS-TERMIN.webp" alt="Sandalias Terminadas">
+                        <h2 class="text-xl font-semibold text-gray-800">Sandalias Terminadas</h2>
+                    </a>
+                    <a href="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/TOMA-MEDIDAS.webp" target="_blank" class="component-card">
+                        <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/AM-PASTOR/TOMA-MEDIDAS.webp" alt="Toma de Medidas">
+                        <h2 class="text-xl font-semibold text-gray-800">Toma de Medidas</h2>
+                    </a>
                 </div>
                 <button class="scroll-button right" onclick="scrollHorizontally('proceso-fabricacion-container', 1)">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
+            <!-- Fin de la nueva sección -->
+
             <h2 class="text-3xl font-bold text-gray-800 mb-6 mt-10 section-title">Trabaja con Nosotros</h2>
             <p class="text-lg text-gray-700">
                 Si eres un profesional de la salud, ortopeda o distribuidor de calzado, te invitamos a contactar con nosotros para explorar oportunidades de colaboración. En Arpiedi, estamos siempre abiertos a establecer nuevas alianzas que nos permitan extender el alcance de nuestros productos y servicios, llevando soluciones de calzado personalizadas a más personas. Nuestro equipo está listo para ofrecerte el soporte y la formación necesaria para que puedas integrar nuestros productos de forma efectiva en tu práctica o negocio, asegurando que estés a la vanguardia de la innovación en calzado ortopédico.
