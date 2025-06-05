@@ -46,7 +46,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-size: cover; /* Asegura que la imagen cubra todo el slide */
+            background-size: contain; /* Asegura que la imagen cubra todo el slide */
             background-position: center; /* Centra la imagen */
         }
         .banner-slide.active {
@@ -55,7 +55,7 @@
         .banner-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta la imagen para cubrir el espacio, recortando si es necesario */
+            object-fit: contain; /* Ajusta la imagen para cubrir el espacio, recortando si es necesario */
         }
         .slider-arrow {
             position: absolute;
