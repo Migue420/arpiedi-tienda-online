@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arpiedi - Calzado Ortopédico a Medida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light gray background */
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #2C3E50; /* Dark blue accent */
+            border-radius: 2px;
+        }
+        /* Estilos para el slider del banner */
+        .banner-slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
+            height: 500px; /* Altura fija para el slider, ajustar según sea necesario */
+        }
+        .banner-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: contain; /* Asegura que la imagen cubra todo el slide */
+            background-position: center; /* Centra la imagen */
+        }
+        .banner-slide.active {
+            opacity: 1;
+        }
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ajusta la imagen para cubrir el espacio, recortando si es necesario */
+        }
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+        .slider-arrow.left {
+            left: 1rem;
+        }
+        .slider-arrow.right {
+            right: 1rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <section class="bg-white py-4 text-center">
+        <a href="index.html" class="block w-full">
+            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
+        </a>
+    </section>
+
+    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-center items-center">
+            <nav>
+                <ul id="main-nav-links" class="flex space-x-6">
+                    <li><a href="index.html" class="text-blue-700 font-medium text-xl">Inicio</a></li>
+                    <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
+                    <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
+                    <li><a href="novedades.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
+                    <li><a href="componentes-calzado.html" class="text-gray-600 font-medium text-xl">Componentes del Calzado</a></li>
+                    <li><a href="cartas-colores.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Cartas de Colores</a></li>
+                    <li><a href="sobre-nosotros.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
+                    <li><a href="carrito.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="banner-slider mx-auto max-w-6xl mb-12">
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/BOLASTICO.jpg" alt="Banner Bolastico Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/BOTA_MONTANA.jpg" alt="Banner Bota Montaña Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/BOTIN_PELO.jpg" alt="Banner Botín Pelo Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/BOTIN_CORDONES.jpg" alt="Banner Botín Cordones Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/DEPORTIVO.jpg" alt="Banner Deportivo Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/BOTIN_ELASTICOS.jpg" alt="Banner Botín Elásticos Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/BLUCHER_CLASICO.jpg" alt="Banner Blucher Clásico Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/BOTIN_LISO_.jpg" alt="Banner Botín Liso Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/MENORQUINAS.jpg" alt="Banner Menorquinas Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/BOTIN_YUTE.jpg" alt="Banner Botín Yute Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/MERCEDES_SPORT.jpg" alt="Banner Mercedes Sport Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/DEPORTIVO_JOGGING.jpg" alt="Banner Deportivo Jogging Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/MERCEDES_VESTIR.jpg" alt="Banner Mercedes Vestir Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/DEPORTIVO_YUTE.jpg" alt="Banner Deportivo Yute Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/MOCASIN_SPORT.jpg" alt="Banner Mocasín Sport Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/INLES_SPORT.jpg" alt="Banner Ingles Sport Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/MONTALANA.jpg" alt="Banner Montalana Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/MOCASIN_VESTIR.jpg" alt="Banner Mocasín Vestir Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/WALLA.jpg" alt="Banner Walla Señora">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner-caballero/NAUTICO_SPORT.jpg" alt="Banner Náutico Sport Caballero">
+            </div>
+            <div class="banner-slide">
+                <img src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/banner%20y%20slayer/banner_senora/ZUECO.jpg" alt="Banner Zueco Señora">
+            </div>
+            <!-- Flechas de navegación del slider (opcional, el auto-avance está configurado) -->
+            <div class="slider-arrow left" onclick="moveBannerSlide(-1)">&#10094;</div>
+            <div class="slider-arrow right" onclick="moveBannerSlide(1)">&#10095;</div>
+        </div>
+
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-12 section-title">Nuestros Valores</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-blue-600 text-5xl mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9.75 18.75c0 .621.504 1.125 1.125 1.125H16.5a1.125 1.125 0 001.125-1.125v-1.5m-1.125 1.125h-6.75m6.75 0l-3.077-3.077m3.077 3.077H15m3.077-3.077l-3.077-3.077m3.077 3.077V9.75m6 0a2.25 2.25 0 00-2.25-2.25H15V2.25A2.25 2.25 0 0012.75 0h-1.5A2.25 2.25 0 009 2.25v3.375c0 .621.504 1.125 1.125 1.125h1.5a1.125 1.125 0 001.125-1.125V2.25m6.75 0h-3.75a2.25 2.25 0 00-2.25 2.25V9.75m0 0a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v3.375c0 .621.504 1.125 1.125 1.125h1.5a1.125 1.125 0 001.125-1.125V9.75m6.75 0h-3.75a2.25 2.25 0 00-2.25 2.25V15m0 0a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v3.375c0 .621.504 1.125 1.125 1.125h1.5a1.125 1.125 0 001.125-1.125V15" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-700 mb-3">Calidad Superior</h3>
+                        <p class="text-gray-600">Utilizamos solo materiales de primera calidad y tecnología de vanguardia para un calzado duradero y eficaz.</p>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-blue-600 text-5xl mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-700 mb-3">Confort Inigualable</h3>
+                        <p class="text-gray-600">Diseñamos cada par pensando en tu comodidad, adaptándonos a la morfología única de tu pie.</p>
+                    </div>
+                    <div class="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-blue-600 text-5xl mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.124A2.25 2.25 0 012.25 18c0-.827.468-1.584 1.215-1.956m5.56-.475a3 3 0 005.78 1.124A2.25 2.25 0 0021.75 18c0-.827-.468-1.584-1.215-1.956m-9.955-7.84a3 3 0 11-1.24-2.527m1.24 2.527A3 3 0 1115 6.75H9a3 3 0 002.841 2.527z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-700 mb-3">Diseño a Medida</h3>
+                        <p class="text-gray-600">Ofrecemos una extensa gama de modelos personalizados que se adecúan a las necesidades individuales.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-12 section-title">Sobre Nosotros</h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                    Arpiedi es una marca especializada en la confección de zapatos ortopédicos a medida. Nuestra misión es proporcionar calzado de primera calidad que no solo sea cómodo, sino que también contribuya a la salud podal. Contamos con un equipo de especialistas con años de experiencia en el diseño y elaboración de zapatos que se ajustan de manera óptima a las exigencias de nuestra clientela.
+                </p>
+                <a href="sobre-nosotros.html" class="mt-8 inline-block bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                    Conoce Más Sobre Arpiedi
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
+                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
+                <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript para el slider del banner
+        let currentBannerSlide = 0;
+        const bannerSlides = document.querySelectorAll('.banner-slide');
+        const totalBannerSlides = bannerSlides.length;
+
+        function showBannerSlide(index) {
+            bannerSlides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function moveBannerSlide(direction) {
+            currentBannerSlide = (currentBannerSlide + direction + totalBannerSlides) % totalBannerSlides;
+            showBannerSlide(currentBannerSlide);
+        }
+
+        // Inicializar el primer slide visible
+        document.addEventListener('DOMContentLoaded', () => {
+            if (totalBannerSlides > 0) {
+                showBannerSlide(currentBannerSlide);
+            }
+        });
+
+        // Auto-avance del slider del banner
+        setInterval(() => {
+            moveBannerSlide(1);
+        }, 5000); // Cambia de slide cada 5 segundos (5000 milisegundos)
+
+        // Script para resaltar el enlace de navegación activo
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('#main-nav-links a');
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split('/').pop();
+                if (linkPath === currentPath) {
+                    link.classList.remove('text-gray-600');
+                    link.classList.add('text-blue-700');
+                } else {
+                    link.classList.remove('text-blue-700');
+                    link.classList.add('text-gray-600');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
