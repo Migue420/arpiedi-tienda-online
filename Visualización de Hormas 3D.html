@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arpiedi - Ficha de Toma de Medidas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Script para Model Viewer (actualizado a la última versión estable 3.4.0) -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light gray background */
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #2C3E50; /* Dark blue accent */
+            border-radius: 2px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            outline: none;
+        }
+        .form-group input[type="file"] {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            background-color: #fff;
+        }
+        fieldset {
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #fcfcfc;
+        }
+        legend {
+            font-weight: 700;
+            color: #2C3E50;
+            padding: 0 0.5rem;
+            font-size: 1.25rem; /* text-xl */
+            margin-bottom: 1rem;
+        }
+        fieldset label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-weight: 400;
+            color: #4A5568;
+        }
+        fieldset input[type="checkbox"] {
+            margin-right: 0.75rem;
+            transform: scale(1.2); /* Make checkbox slightly larger */
+        }
+        /* Estilos para el Model Viewer */
+        model-viewer {
+            width: 100%;
+            height: 400px; /* Ajusta la altura según tus necesidades */
+            background-color: #f0f0f0;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <section class="bg-white py-4 text-center">
+        <a href="index.html" class="block w-full">
+            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
+        </a>
+    </section>
+
+    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-center items-center">
+            <nav>
+                <ul id="main-nav-links" class="flex space-x-6">
+                    <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
+                    <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
+                    <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
+                    <li><a href="novedades.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
+                    <li><a href="sobre-nosotros.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
+                    <li><a href="carrito.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
+                    <!-- Asegúrate de que el enlace a esta página también esté activo si se necesita -->
+                    <li><a href="gestion-articulos.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Gestión Artículos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Ficha de Toma de Medidas - Calzado Ortopédico</h1>
+
+        <!-- Sección de Visor 3D -->
+        <section class="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center section-title mx-auto">Visualización de Hormas 3D</h2>
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                Explora nuestros modelos de hormas 3D. Puedes rotar, hacer zoom y arrastrar para verlos desde cualquier ángulo.
+            </p>
+
+            <div class="form-group mb-6">
+                <label for="modelo3d_selector" class="text-xl font-semibold mb-2">Selecciona un modelo de horma:</label>
+                <select id="modelo3d_selector" class="rounded-md w-full p-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" disabled>-- Elige un modelo --</option>
+                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/C-1578.glb" selected>Horma C-1578 (.glb)</option>
+                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/models/horma_estandar.obj">Horma Estándar (.obj)</option>
+                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/models/horma_deportiva.stl">Horma Deportiva (.stl)</option>
+                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/models/horma_ortopedica.obj">Horma Ortopédica (.obj)</option>
+                    <!-- Añade más opciones aquí con las URLs de tus modelos 3D reales -->
+                </select>
+            </div>
+
+            <model-viewer id="modelViewer"
+                          src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/C-1578.glb"
+                          alt="Modelo 3D de Horma de Calzado"
+                          camera-controls
+                          shadow-intensity="1"
+                          camera-orbit="0deg 90deg 0.5m"
+                          auto-rotate
+                          class="mx-auto">
+                <div slot="poster" class="flex items-center justify-center h-full w-full bg-gray-200 text-gray-600">
+                    Cargando modelo 3D...
+                </div>
+            </model-viewer>
+
+          
+            
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
+                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
+                <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Script para resaltar el enlace de navegación activo
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('#main-nav-links a');
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split('/').pop();
+                if (linkPath === currentPath) {
+                    link.classList.remove('text-gray-600');
+                    link.classList.add('text-blue-700');
+                } else {
+                    link.classList.remove('text-blue-700');
+                    link.classList.add('text-gray-600');
+                }
+            });
+
+            // Lógica para el selector de Model Viewer
+            const modelSelector = document.getElementById('modelo3d_selector');
+            const modelViewer = document.getElementById('modelViewer');
+
+            if (modelSelector && modelViewer) {
+                modelSelector.addEventListener('change', function() {
+                    const selectedModelUrl = this.value;
+                    if (selectedModelUrl) {
+                        modelViewer.src = selectedModelUrl;
+                        // Opcional: ajustar el tamaño o la posición inicial del modelo si es necesario
+                        // modelViewer.cameraOrbit = "0deg 90deg auto"; // Ejemplo: resetea la vista
+                    }
+                });
+
+                // Cargar el modelo pre-seleccionado al inicio
+                const initialSelectedOption = modelSelector.querySelector('option[selected]');
+                if (initialSelectedOption) {
+                    modelViewer.src = initialSelectedOption.value;
+                } else if (modelSelector.options.length > 1) { // Fallback: cargar el primer modelo si no hay pre-seleccionado
+                    modelViewer.src = modelSelector.options[1].value;
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
