@@ -1,0 +1,64 @@
+```json
+[
+  {
+    "intent": "info_empresa",
+    "keywords": ["empresa", "taller", "quiénes somos", "qué tipo de empresa", "arpiedi"],
+    "response": "Somos un taller familiar de **Artesanos del Calzado**, dedicados generación tras generación al arte de elaborar calzado y guarniciones de piel a mano. Nos especializamos en **calzado a medida y cómodo**, ofreciendo la más alta calidad y diseño, con productos **garantizados de por vida**."
+  },
+  {
+    "intent": "info_ubicacion_contacto",
+    "keywords": ["ubicación", "dónde están", "dirección", "tienda", "taller", "contacto", "teléfono", "email", "correo"],
+    "response": "Nuestra tienda y taller de **Artesanos del Calzado** están ubicados en **San Antón, 11 - 47100 Tordesillas (Valladolid), Castilla y León, España**. Puede contactarnos llamando al **(+34) 983 77 08 65** o al **(+34) 658 85 61 24**, o enviando un correo electrónico a **info@calzadoamedida.com**."
+  },
+  {
+    "intent": "info_productos_calzado_medida",
+    "keywords": ["calzado a medida", "zapatos personalizados", "hechos a mano", "qué ofrecen", "tipos de calzado a medida"],
+    "response": "Ofrecemos **calzado a medida** totalmente personalizado, fabricado específicamente para las características anatómicas de sus pies. El proceso incluye una **minuciosa toma de medidas** para crear una horma exacta de su pie. Podemos trabajar sobre hormas adaptadas para deformidades comunes (como dedos martillo o juanetes) o sobre **moldes de los pies** para casos más complejos como grandes deformidades, úlceras o amputaciones. Le ofrecemos un alto grado de personalización en diseño, tipo de cuero y acabados."
+  },
+  {
+    "intent": "info_materiales_garantia",
+    "keywords": ["materiales", "piel", "cuero", "calidad", "garantía", "durabilidad"],
+    "response": "Utilizamos productos de **curtición artesanal y natural** de Villarramiel (Palencia), obteniendo pieles de **alta calidad y resistencia**. Para pies sensibles o diabéticos, empleamos pieles más suaves y forros especiales de plastazote u ova que ofrecen confort adicional y evitan roces. Nuestros productos están **garantizados de por vida**, lo que los convierte en una **inversión a largo plazo**."
+  },
+  {
+    "intent": "info_calzado_ortopedico",
+    "keywords": ["calzado ortopédico", "zapatos especiales", "qué es", "características", "tipos de calzado ortopédico"],
+    "response": "El **calzado ortopédico** es un zapato especializado diseñado para ofrecer **mayor soporte, estabilidad y amortiguación** a personas con problemas en los pies o en recuperación de lesiones. Sus características clave incluyen un soporte mejorado para el arco y el tobillo, absorción de impactos, distribución uniforme de la presión y un ajuste personalizable. Algunos tipos comunes son los **zapatos extra profundos**, con **fondo rockero**, **postoperatorios**, de **control de movimiento** y **zapatos para diabéticos**."
+  },
+  {
+    "intent": "info_afecciones_tratadas",
+    "keywords": ["problemas de pies", "qué trata", "deformidades", "enfermedades", "pie diabético", "juanetes", "artritis", "neuropatía"],
+    "response": "Nuestro calzado está diseñado para corregir, proteger y compensar **deformidades y patologías podales complejas**. Ayudamos a personas con **pie diabético** (incluyendo úlceras, neuropatía o problemas de circulación), **artritis**, **afecciones neuropáticas**, así como deformidades comunes como **juanetes**, **dedos martillo**, pies planos, pie de Charcot y dismetrías o problemas de pisada. También abordamos la atrofia muscular y las dificultades de movilidad."
+  },
+  {
+    "intent": "info_certificado_discapacidad_beneficios",
+    "keywords": ["certificado de discapacidad", "beneficios", "ventajas", "qué es", "para qué sirve"],
+    "response": "El certificado de discapacidad es un documento oficial que acredita un grado de discapacidad y otorga **derechos y beneficios sociales, fiscales y laborales** en España. Para obtenerlo, se requiere un **grado de discapacidad igual o superior al 33%**. Las ventajas incluyen **ayudas económicas** (como pensiones no contributivas para ≥65% de discapacidad), **beneficios fiscales** (reducciones en IRPF, IVA reducido en productos ortopédicos), ayudas para **vivienda y educación**, y ventajas en **movilidad** (tarjeta de estacionamiento, descuentos en transporte). Este documento tiene validez en todo el territorio español."
+  },
+  {
+    "intent": "info_tramite_certificado_discapacidad",
+    "keywords": ["cómo solicitar certificado", "proceso discapacidad", "requisitos", "dónde pedir", "plazo certificado"],
+    "response": "El proceso para solicitar el certificado de discapacidad es voluntario y gratuito, gestionado por cada Comunidad Autónoma. Implica una **valoración médica, social y psicológica** por un tribunal o equipo multiprofesional en los **Centros Base** de su Comunidad Autónoma. Necesitará **informes médicos actualizados** y su DNI. El plazo de resolución es de hasta **seis meses desde la solicitud**, aunque en la práctica puede ser más largo. Existe un **trámite de urgencia** que reduce el tiempo a la mitad para casos especiales de salud o vulnerabilidad."
+  },
+  {
+    "intent": "info_financiacion_calzado_ortopedico",
+    "keywords": ["financiación", "calzado ortopédico", "seguridad social", "ayudas", "subvenciones", "coste", "precio"],
+    "response": "El **Sistema Nacional de Salud (SNS)** en España cubre el calzado ortopédico para grandes deformidades (código 06 33 90) y para pies diabéticos, artríticos y neuropáticos. La modalidad más común de financiación es el **reintegro de gastos**, donde usted abona el coste y luego solicita el reembolso de la parte cubierta por la administración. El **co-pago** para este tipo de calzado suele ser de **36€**, pero es de **0€ para categorías exentas**. Las subvenciones y trámites específicos varían según cada Comunidad Autónoma."
+  },
+  {
+    "intent": "info_diferencia_ortesis_ortopedico",
+    "keywords": ["diferencia ortesis ortopédico", "plantillas vs zapatos", "ortóticos", "plantillas ortopédicas"],
+    "response": "Las **órtesis** son dispositivos (como plantillas o insertos ortopédicos) que se colocan **dentro de zapatos normales** para dar soporte, alinear y corregir deformidades leves a moderadas. El **calzado ortopédico**, en cambio, es un **zapato especializado** que reemplaza el calzado habitual, ofreciendo un soporte y amortiguación mayores para afecciones graves del pie. En muchos casos, la mejor solución es una combinación de calzado ortopédico con órtesis personalizadas."
+  },
+  {
+    "intent": "info_cuidado_pie",
+    "keywords": ["cuidado pies", "prevención", "higiene", "consejos pies", "pie diabético", "salud del pie"],
+    "response": "El cuidado del pie, especialmente para personas mayores o con diabetes, implica **higiene diaria** (lavado con agua tibia y jabón neutro, secado minucioso entre los dedos). Se recomienda el uso de **calzado flexible y adecuado**, evitar el uso excesivo y alternar pares de zapatos para airear los pies. Para el pie diabético, es crucial la **exploración anual por un profesional sanitario** y el uso de calzado que prevenga lesiones, minimice la fricción y redistribuya la presión. También son beneficiosos los ejercicios para los pies y los masajes."
+  },
+  {
+    "intent": "info_ferias_participacion",
+    "keywords": ["ferias", "exposiciones", "eventos", "presencia en eventos"],
+    "response": "Como **Artesanos del Calzado**, hemos participado en numerosas ferias nacionales e internacionales, incluyendo F.I.N.A.R. en Madrid, la Exposición de Amberes en Bélgica, Expoconsumo en Bilbao, la Feria Internacional de Artesanía de Gerona, la Feria Mundial del Caballo de Sevilla, y la Feria Iberoamericana de Santo Domingo de la Calzada. También hemos estado presentes en diversas Ferias de Artesanía en múltiples ciudades españolas y Aveiro, Portugal."
+  }
+]
+```
