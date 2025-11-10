@@ -61,4 +61,62 @@
     "response": "Como **Artesanos del Calzado**, hemos participado en numerosas ferias nacionales e internacionales, incluyendo F.I.N.A.R. en Madrid, la Exposición de Amberes en Bélgica, Expoconsumo en Bilbao, la Feria Internacional de Artesanía de Gerona, la Feria Mundial del Caballo de Sevilla, y la Feria Iberoamericana de Santo Domingo de la Calzada. También hemos estado presentes en diversas Ferias de Artesanía en múltiples ciudades españolas y Aveiro, Portugal."
   }
 ]
+[
+  {
+    "id": "H-CUA-SRA",
+    "nombre": "Horma Cuadrada (MAAITE)",
+    "estilo": "Urbano / Señora",
+    "talla": 38,
+    "archivo_stl": "assets/images/MAAITE CUADRADA.stl",
+    "parametros_ibv": {
+      "longitud_calzable_mm": 250.0,
+      "perimetro_articulacion_mm": 220.0,
+      "altura_min_puntera_mm": 25.0,
+      "angulo_min_puntera_grados": 80
+    },
+    "comentarios_gemini": "Puntera cuadrada con espacio suficiente para dedos. Ideal para tacón bajo a medio. (Ver Tabla 5.3 para tallas)."
+  },
+  {
+    "id": "H-MOC-RED",
+    "nombre": "Mocasín Nervio Redondo",
+    "estilo": "Urbano / Mocasín",
+    "talla": 41,
+    "archivo_stl": "assets/images/MOCASIN NERVIO REDONDA.stl",
+    "parametros_ibv": {
+      "longitud_calzable_mm": 273.3,
+      "perimetro_articulacion_mm": 248.0,
+      "altura_min_puntera_mm": 22.3,
+      "angulo_min_puntera_grados": 70
+    },
+    "comentarios_gemini": "Diseño que exige ajuste dinámico en el empeine (ver 5.2.3). El perímetro debe ser menor al del pie."
+  },
+  {
+    "id": "H-CLT-GC",
+    "nombre": "Cliente Gonzalo GC",
+    "estilo": "Personalizado / Hombre",
+    "talla": 44,
+    "archivo_stl": "assets/images/gonzalo GC.stl",
+    "parametros_ibv": {
+      "longitud_calzable_mm": 286.7,
+      "perimetro_articulacion_mm": 251.9,
+      "altura_min_puntera_mm": 25.0,
+      "angulo_min_puntera_grados": 60
+    },
+    "comentarios_gemini": "Horma ancha en flancos, revisar el ajuste en la parte más ancha del pie (ver 5.2.1)."
+  },
+  {
+    "id": "H-BASE-03",
+    "nombre": "Horma Base 29103",
+    "estilo": "Genérico",
+    "talla": 40,
+    "archivo_stl": "assets/images/29103.stl",
+    "parametros_ibv": {
+      "longitud_calzable_mm": 266.7,
+      "perimetro_articulacion_mm": 240.3,
+      "altura_min_puntera_mm": 22.3,
+      "angulo_min_puntera_grados": 70
+    },
+    "comentarios_gemini": "Ideal para realizar la corrección de largo y ancho para calzado independiente (ver 3.5)."
+  }
+]
 ```
