@@ -3,217 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arpiedi - Ficha de Toma de Medidas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Script para Model Viewer (actualizado a la última versión estable 3.4.0) -->
-    <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+    <title>Aula Virtual: Selección y Análisis de Hormas 3D (IBV)</title>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8; /* Light gray background */
-        }
-        .section-title {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 8px;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50%;
-            height: 3px;
-            background-color: #2C3E50; /* Dark blue accent */
-            border-radius: 2px;
-        }
-        .form-group label {
-            font-weight: 600;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
             color: #333;
-            margin-bottom: 0.5rem;
-            display: block;
         }
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="number"],
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
+        header {
+            background-color: #004d40;
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
-        .form-group input[type="text"]:focus,
-        .form-group input[type="email"]:focus,
-        .form-group input[type="tel"]:focus,
-        .form-group input[type="number"]:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-            outline: none;
-        }
-        .form-group input[type="file"] {
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            background-color: #fff;
-        }
-        fieldset {
-            border: 1px solid #e0e0e0;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            background-color: #fcfcfc;
-        }
-        legend {
-            font-weight: 700;
-            color: #2C3E50;
-            padding: 0 0.5rem;
-            font-size: 1.25rem; /* text-xl */
-            margin-bottom: 1rem;
-        }
-        fieldset label {
+        #container {
             display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            font-weight: 400;
-            color: #4A5568;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 70vh;
         }
-        fieldset input[type="checkbox"] {
-            margin-right: 0.75rem;
-            transform: scale(1.2); /* Make checkbox slightly larger */
+        #controls {
+            width: 300px;
+            padding: 20px;
+            border-right: 1px solid #ddd;
         }
-        /* Estilos para el Model Viewer */
-        model-viewer {
+        #viewer-3d {
+            flex-grow: 1;
+            height: 700px;
+            background-color: #e0e0e0; /* Fondo gris claro para el visor */
+        }
+        #infoHorma {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            border-left: 5px solid #004d40;
+        }
+        #infoHorma ul {
+            list-style: none;
+            padding: 0;
+        }
+        #infoHorma li {
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        select, button {
             width: 100%;
-            height: 400px; /* Ajusta la altura según tus necesidades */
-            background-color: #f0f0f0;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
 </head>
-<body class="antialiased">
+<body>
 
-    <section class="bg-white py-4 text-center">
-        <a href="index.html" class="block w-full">
-            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
-        </a>
-    </section>
-
-    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-center items-center">
-            <nav>
-                <ul id="main-nav-links" class="flex space-x-6">
-                    <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
-                    <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
-                    <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
-                    <li><a href="novedades.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
-                    <li><a href="sobre-nosotros.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
-                    <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
-                    <li><a href="carrito.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Carrito</a></li>
-                    <!-- Asegúrate de que el enlace a esta página también esté activo si se necesita -->
-                    <li><a href="gestion-articulos.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Gestión Artículos</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header>
+        <h1>Aula Virtual de Patronaje Biomecánico 👟</h1>
+        <p>Selecciona una horma para ver sus parámetros IBV y visualización 3D.</p>
     </header>
 
-    <main class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Ficha de Toma de Medidas - Calzado Ortopédico</h1>
-
-        <!-- Sección de Visor 3D -->
-        <section class="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto mb-12">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center section-title mx-auto">Visualización de Hormas 3D</h2>
-            <p class="text-lg text-gray-700 mb-6 text-center">
-                Explora nuestros modelos de hormas 3D. Puedes rotar, hacer zoom y arrastrar para verlos desde cualquier ángulo.
-            </p>
-
-            <div class="form-group mb-6">
-                <label for="modelo3d_selector" class="text-xl font-semibold mb-2">Selecciona un modelo de horma:</label>
-                <select id="modelo3d_selector" class="rounded-md w-full p-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="" disabled>-- Elige un modelo --</option>
-                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/C-1578.glb" selected>Horma C-1578 (.glb)</option>
-                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/models/horma_estandar.obj">Horma Estándar (.obj)</option>
-                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/models/horma_deportiva.stl">Horma Deportiva (.stl)</option>
-                    <option value="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/models/horma_ortopedica.obj">Horma Ortopédica (.obj)</option>
-                    <!-- Añade más opciones aquí con las URLs de tus modelos 3D reales -->
-                </select>
-            </div>
-
-            <model-viewer id="modelViewer"
-                          src="https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/C-1578.glb"
-                          alt="Modelo 3D de Horma de Calzado"
-                          camera-controls
-                          shadow-intensity="1"
-                          camera-orbit="0deg 90deg 0.5m"
-                          auto-rotate
-                          class="mx-auto">
-                <div slot="poster" class="flex items-center justify-center h-full w-full bg-gray-200 text-gray-600">
-                    Cargando modelo 3D...
-                </div>
-            </model-viewer>
-
-          
+    <div id="container">
+        <aside id="controls">
             
+            <label for="selectorHormas">Seleccionar Horma 3D:</label>
+            <select id="selectorHormas" onchange="seleccionarHorma(this.value)">
+                <option value="">Cargando catálogo...</option>
+            </select>
+            
+            <button onclick="iniciarAnalisisGemini()" style="background-color: #ff9800; color: white;">
+                Iniciar Análisis de Patrón (Gemini)
+            </button>
 
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
-            <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
-                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
-                <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+            <div id="infoHorma">
+                <h3>Parámetros Biomecánicos (IBV)</h3>
+                <p>Selecciona una horma del menú superior para cargar sus datos técnicos y de diseño según las recomendaciones biomecánicas.</p>
             </div>
-        </div>
-    </footer>
+            
+        </aside>
+
+        <main id="viewer-3d">
+            </main>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Script para resaltar el enlace de navegación activo
-            const currentPath = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('#main-nav-links a');
+        
+        // ----------------------------------------------------------------------
+        // CONFIGURACIÓN Y RUTAS DE GITHUB
+        // ----------------------------------------------------------------------
 
-            navLinks.forEach(link => {
-                const linkPath = link.getAttribute('href').split('/').pop();
-                if (linkPath === currentPath) {
-                    link.classList.remove('text-gray-600');
-                    link.classList.add('text-blue-700');
-                } else {
-                    link.classList.remove('text-blue-700');
-                    link.classList.add('text-gray-600');
+        // IMPORTANTE: Asegúrate de que esta URL apunta al archivo JSON en tu rama principal
+        const GITHUB_USER = 'Migue420';
+        const GITHUB_REPO = 'arpiedi-tienda-online';
+        const GITHUB_BRANCH = 'main'; // O 'master' si usas esa rama
+        
+        const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
+        const CATALOG_URL = BASE_URL + 'data/conocimiento.json';
+        
+        let catalogoHormas = []; // Almacenará todos los datos del JSON
+        let scene, camera, renderer, currentMesh; // Variables globales para Three.js
+
+        // ----------------------------------------------------------------------
+        // 1. CARGA EL CATÁLOGO DE HORMAS AL INICIO
+        // ----------------------------------------------------------------------
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJs(); // Inicializa el entorno 3D antes de cargar datos
+            cargarCatalogo();
+        });
+
+        async function cargarCatalogo() {
+            try {
+                const response = await fetch(CATALOG_URL);
+                if (!response.ok) {
+                    throw new Error(`Error HTTP ${response.status}: Revise la ruta del archivo JSON en GitHub.`);
                 }
-            });
+                catalogoHormas = await response.json();
+                
+                const selector = document.getElementById('selectorHormas');
+                selector.innerHTML = '<option value="">-- Elige una horma --</option>';
 
-            // Lógica para el selector de Model Viewer
-            const modelSelector = document.getElementById('modelo3d_selector');
-            const modelViewer = document.getElementById('modelViewer');
-
-            if (modelSelector && modelViewer) {
-                modelSelector.addEventListener('change', function() {
-                    const selectedModelUrl = this.value;
-                    if (selectedModelUrl) {
-                        modelViewer.src = selectedModelUrl;
-                        // Opcional: ajustar el tamaño o la posición inicial del modelo si es necesario
-                        // modelViewer.cameraOrbit = "0deg 90deg auto"; // Ejemplo: resetea la vista
-                    }
+                // Llena el selector con las opciones del JSON
+                catalogoHormas.forEach(horma => {
+                    const option = document.createElement('option');
+                    option.value = horma.id;
+                    option.textContent = horma.nombre;
+                    selector.appendChild(option);
                 });
 
-                // Cargar el modelo pre-seleccionado al inicio
-                const initialSelectedOption = modelSelector.querySelector('option[selected]');
-                if (initialSelectedOption) {
-                    modelViewer.src = initialSelectedOption.value;
-                } else if (modelSelector.options.length > 1) { // Fallback: cargar el primer modelo si no hay pre-seleccionado
-                    modelViewer.src = modelSelector.options[1].value;
-                }
+            } catch (error) {
+                console.error('Fallo crítico al cargar el catálogo:', error);
+                document.getElementById('selectorHormas').innerHTML = '<option value="">ERROR AL CARGAR (Revise URL)</option>';
             }
-        });
-    </script>
+        }
 
+        // ----------------------------------------------------------------------
+        // 2. FUNCIÓN DE SELECCIÓN, CARGA 3D Y MOSTRAR PARÁMETROS
+        // ----------------------------------------------------------------------
+
+        function seleccionarHorma(hormaId) {
+            if (!hormaId) {
+                document.getElementById('infoHorma').innerHTML = '<h3>Parámetros Biomecánicos (IBV)</h3><p>Selecciona una horma para ver sus datos.</p>';
+                limpiarVisor();
+                return;
+            }
+
+            const hormaSeleccionada = catalogoHormas.find(h => h.id === hormaId);
+
+            if (hormaSeleccionada) {
+                const stlUrl = BASE_URL + hormaSeleccionada.archivo_stl;
+                
+                // Carga del STL
+                cargarSTL(stlUrl); 
+                
+                // Muestra los parámetros biomecánicos
+                mostrarParametrosIBV(hormaSeleccionada);
+            }
+        }
+
+        function mostrarParametrosIBV(horma) {
+            const params = horma.parametros_ibv;
+            const infoDiv = document.getElementById('infoHorma');
+            let html = `
+                <h3>Parámetros IBV (Modelo: ${horma.talla})</h3>
+                <p><strong>Estilo:</strong> ${horma.estilo}</p>
+                <ul>
+                    <li>Longitud Calzable: <strong>${params.longitud_calzable_mm} mm</strong></li>
+                    <li>Perímetro Articulación: <strong>${params.perimetro_articulacion_mm} mm</strong></li>
+                    <li>Altura Mínima Puntera: ${params.altura_min_puntera_mm} mm (Mínima recomendada)</li>
+                    <li>Ángulo Mínimo Puntera: ${params.angulo_min_puntera_grados}°</li>
+                    <li>Altura Flanco Interior: ${params.altura_flanco_int_mm} mm</li>
+                </ul>
+                <p style="color: #004d40;">**Guía Gemini:** ${horma.comentarios_gemini}</p>
+            `;
+            infoDiv.innerHTML = html;
+        }
+        
+        // ----------------------------------------------------------------------
+        // 3. FUNCIONES BÁSICAS DE THREE.JS (Visor 3D)
+        // ----------------------------------------------------------------------
+
+        function initThreeJs() {
+            // Configuración de la escena, cámara y renderizador
+            const container = document.getElementById('viewer-3d');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f0f0);
+            
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 100);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            // Luces
+            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(100, 100, 100);
+            scene.add(directionalLight);
+
+            // Control de órbita (necesitarás OrbitControls.js para esto en un entorno real)
+            // Asumiendo que ya tienes una función para la interactividad de giro (entre 60°)
+
+            // Animación
+            function animate() {
+                requestAnimationFrame(animate);
+                // Si la horma existe, puedes rotarla o permitir el control del usuario
+                if (currentMesh) {
+                    // Por ejemplo: currentMesh.rotation.y += 0.005;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('viewer-3d');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        function limpiarVisor() {
+            if (currentMesh) {
+                scene.remove(currentMesh);
+                currentMesh = null;
+            }
+        }
+
+        function cargarSTL(url) {
+            limpiarVisor();
+
+            const loader = new THREE.STLLoader();
+            loader.load(url, function (geometry) {
+                const material = new THREE.MeshPhongMaterial({ color: 0xaaaaaa, specular: 0x111111, shininess: 200 });
+                currentMesh = new THREE.Mesh(geometry, material);
+
+                // Centrar y escalar la horma
+                geometry.computeBoundingBox();
+                const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+                const size = geometry.boundingBox.getSize(new THREE.Vector3());
+                
+                // Escala simple para que quepa en la vista
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 50 / maxDim; // Ajusta el factor de 50 para tu escena
+                
+                currentMesh.scale.set(scale, scale, scale);
+                currentMesh.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+                
+                scene.add(currentMesh);
+            }, 
+            (xhr) => {
+                // Progreso de carga
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            (error) => {
+                console.error('Error al cargar el STL:', error);
+                document.getElementById('viewer-3d').innerHTML = '<p style="color:red;text-align:center;padding:20px;">Error al cargar el modelo 3D. Verifique la ruta del archivo STL en GitHub.</p>';
+            });
+        }
+        
+        // Función para el futuro módulo Gemini
+        function iniciarAnalisisGemini() {
+            alert('Función futura: Aquí se activará la API de Gemini para que el usuario suba su patrón 2D y lo compare con los parámetros IBV cargados.');
+            // Aquí llamarías a la API de Gemini con los parámetros de la horma y la imagen del patrón
+        }
+
+    </script>
 </body>
 </html>
