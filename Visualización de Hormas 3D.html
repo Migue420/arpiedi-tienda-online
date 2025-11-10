@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula Virtual: Selección y Análisis de Hormas 3D (IBV)</title>
     <style>
+        /* [cite: 2691] Estilos CSS OMITIDOS para brevedad. Usar los estilos del código anterior. */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -34,7 +35,7 @@
         #viewer-3d {
             flex-grow: 1;
             height: 700px;
-            background-color: #e0e0e0; /* Fondo gris claro para el visor */
+            background-color: #e0e0e0; 
         }
         #infoHorma {
             margin-top: 30px;
@@ -61,7 +62,7 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script> </head>
 <body>
 
     <header>
@@ -89,7 +90,7 @@
         </aside>
 
         <main id="viewer-3d">
-            </main>
+        </main>
     </div>
 
     <script>
@@ -98,23 +99,22 @@
         // CONFIGURACIÓN Y RUTAS DE GITHUB
         // ----------------------------------------------------------------------
 
-        // IMPORTANTE: Asegúrate de que esta URL apunta al archivo JSON en tu rama principal
         const GITHUB_USER = 'Migue420';
         const GITHUB_REPO = 'arpiedi-tienda-online';
-        const GITHUB_BRANCH = 'main'; // O 'master' si usas esa rama
+        const GITHUB_BRANCH = 'main'; 
         
         const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/`;
         const CATALOG_URL = BASE_URL + 'data/conocimiento.json';
         
-        let catalogoHormas = []; // Almacenará todos los datos del JSON
-        let scene, camera, renderer, currentMesh; // Variables globales para Three.js
+        let catalogoHormas = []; 
+        let scene, camera, renderer, controls, currentMesh; 
 
         // ----------------------------------------------------------------------
         // 1. CARGA EL CATÁLOGO DE HORMAS AL INICIO
         // ----------------------------------------------------------------------
 
         document.addEventListener('DOMContentLoaded', () => {
-            initThreeJs(); // Inicializa el entorno 3D antes de cargar datos
+            initThreeJs(); 
             cargarCatalogo();
         });
 
@@ -129,7 +129,6 @@
                 const selector = document.getElementById('selectorHormas');
                 selector.innerHTML = '<option value="">-- Elige una horma --</option>';
 
-                // Llena el selector con las opciones del JSON
                 catalogoHormas.forEach(horma => {
                     const option = document.createElement('option');
                     option.value = horma.id;
@@ -139,7 +138,7 @@
 
             } catch (error) {
                 console.error('Fallo crítico al cargar el catálogo:', error);
-                document.getElementById('selectorHormas').innerHTML = '<option value="">ERROR AL CARGAR (Revise URL)</option>';
+                document.getElementById('selectorHormas').innerHTML = '<option value="">ERROR AL CARGAR (Revise consola)</option>';
             }
         }
 
@@ -151,7 +150,7 @@
             if (!hormaId) {
                 document.getElementById('infoHorma').innerHTML = '<h3>Parámetros Biomecánicos (IBV)</h3><p>Selecciona una horma para ver sus datos.</p>';
                 limpiarVisor();
-                return;
+                return; 
             }
 
             const hormaSeleccionada = catalogoHormas.find(h => h.id === hormaId);
@@ -159,10 +158,7 @@
             if (hormaSeleccionada) {
                 const stlUrl = BASE_URL + hormaSeleccionada.archivo_stl;
                 
-                // Carga del STL
                 cargarSTL(stlUrl); 
-                
-                // Muestra los parámetros biomecánicos
                 mostrarParametrosIBV(hormaSeleccionada);
             }
         }
@@ -176,21 +172,20 @@
                 <ul>
                     <li>Longitud Calzable: <strong>${params.longitud_calzable_mm} mm</strong></li>
                     <li>Perímetro Articulación: <strong>${params.perimetro_articulacion_mm} mm</strong></li>
-                    <li>Altura Mínima Puntera: ${params.altura_min_puntera_mm} mm (Mínima recomendada)</li>
+                    <li>Altura Mínima Puntera: ${params.altura_min_puntera_mm} mm</li>
                     <li>Ángulo Mínimo Puntera: ${params.angulo_min_puntera_grados}°</li>
-                    <li>Altura Flanco Interior: ${params.altura_flanco_int_mm} mm</li>
+                    <li>Altura Flanco Interior: ${params.altura_flanco_int_mm || 'N/A'} mm</li>
                 </ul>
-                <p style="color: #004d40;">**Guía Gemini:** ${horma.comentarios_gemini}</p>
+                <p style="color: #004d40;"><strong>Guía Gemini:</strong> ${horma.comentarios_gemini}</p>
             `;
             infoDiv.innerHTML = html;
         }
         
         // ----------------------------------------------------------------------
-        // 3. FUNCIONES BÁSICAS DE THREE.JS (Visor 3D)
+        // 3. FUNCIONES BÁSICAS DE THREE.JS (Visor 3D Interactivo)
         // ----------------------------------------------------------------------
 
         function initThreeJs() {
-            // Configuración de la escena, cámara y renderizador
             const container = document.getElementById('viewer-3d');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xf0f0f0);
@@ -208,16 +203,19 @@
             directionalLight.position.set(100, 100, 100);
             scene.add(directionalLight);
 
-            // Control de órbita (necesitarás OrbitControls.js para esto en un entorno real)
-            // Asumiendo que ya tienes una función para la interactividad de giro (entre 60°)
+            // Controles Orbitales (Interactivo)
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; 
+            controls.dampingFactor = 0.05;
 
-            // Animación
+            // Restringe la rotación vertical a 60 grados (0.33 pi radianes)
+            // Esto cumple con tu requerimiento de girar "entre 60"
+            controls.minPolarAngle = Math.PI * 0.33; 
+            controls.maxPolarAngle = Math.PI * 0.67; 
+            
             function animate() {
                 requestAnimationFrame(animate);
-                // Si la horma existe, puedes rotarla o permitir el control del usuario
-                if (currentMesh) {
-                    // Por ejemplo: currentMesh.rotation.y += 0.005;
-                }
+                controls.update(); // Necesario si controls.enableDamping está activado
                 renderer.render(scene, camera);
             }
             animate();
@@ -244,7 +242,7 @@
 
             const loader = new THREE.STLLoader();
             loader.load(url, function (geometry) {
-                const material = new THREE.MeshPhongMaterial({ color: 0xaaaaaa, specular: 0x111111, shininess: 200 });
+                const material = new THREE.MeshPhongMaterial({ color: 0x004d40, specular: 0x111111, shininess: 100 }); // Color de marca
                 currentMesh = new THREE.Mesh(geometry, material);
 
                 // Centrar y escalar la horma
@@ -252,14 +250,16 @@
                 const center = geometry.boundingBox.getCenter(new THREE.Vector3());
                 const size = geometry.boundingBox.getSize(new THREE.Vector3());
                 
-                // Escala simple para que quepa en la vista
                 const maxDim = Math.max(size.x, size.y, size.z);
-                const scale = 50 / maxDim; // Ajusta el factor de 50 para tu escena
+                const scale = 80 / maxDim; // Ajusta el factor para tu escena
                 
                 currentMesh.scale.set(scale, scale, scale);
-                currentMesh.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+                currentMesh.position.set(-center.x * scale, -center.y * scale + (size.y * scale / 2), -center.z * scale);
                 
                 scene.add(currentMesh);
+                camera.position.set(0, 50, 100); // Mueve la cámara a una posición inicial visible
+                controls.target.copy(currentMesh.position);
+                controls.update();
             }, 
             (xhr) => {
                 // Progreso de carga
@@ -271,10 +271,8 @@
             });
         }
         
-        // Función para el futuro módulo Gemini
         function iniciarAnalisisGemini() {
             alert('Función futura: Aquí se activará la API de Gemini para que el usuario suba su patrón 2D y lo compare con los parámetros IBV cargados.');
-            // Aquí llamarías a la API de Gemini con los parámetros de la horma y la imagen del patrón
         }
 
     </script>
