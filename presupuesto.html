@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arpiedi - Solicitud de Presupuesto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="assets/js/form_handler.js" defer></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #2C3E50;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <section class="bg-white py-4 text-center">
+        <a href="index.html" class="block w-full">
+            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
+        </a>
+    </section>
+
+    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-center items-center">
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a></li>
+                    <li><a href="modelos-senora.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
+                    <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
+                    <li><a href="contacto.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center section-title mx-auto">Solicitud de Presupuesto</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+            <p class="text-gray-700 mb-6 text-center">
+                Cuéntanos sobre tu proyecto y te enviaremos un presupuesto personalizado.
+            </p>
+
+            <form onsubmit="handleFormSubmit(event, 'presupuesto')" class="space-y-6">
+                <div>
+                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                    <input type="text" id="nombre" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border">
+                </div>
+
+                <div>
+                    <label for="empresa" class="block text-sm font-medium text-gray-700">Empresa (Opcional)</label>
+                    <input type="text" id="empresa" name="empresa" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border">
+                </div>
+
+                <div>
+                    <label for="detalles_proyecto" class="block text-sm font-medium text-gray-700">Detalles del Proyecto</label>
+                    <textarea id="detalles_proyecto" name="detalles_proyecto" rows="5" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border" placeholder="Describe lo que necesitas..."></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="w-full inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                        Solicitar Presupuesto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
