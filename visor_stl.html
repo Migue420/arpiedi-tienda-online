@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor STL Nativo con Análisis IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilo para el estado de carga */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        #viewer {
+            min-height: 60vh;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+        }
+        #viewer:active {
+            cursor: grabbing;
+        }
+        /* Mensaje de carga del modelo */
+        #modelLoadingMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #374151;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+    </style>
+    <!-- BIBLIOTECAS 3D (Three.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Contenedor Superior: Controles -->
+    <div class="bg-white shadow-md rounded-lg p-6 m-4 md:m-8">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Visor de Archivos STL con Análisis IA</h1>
+        
+        <!-- Sección 1: Carga por URL -->
+        <label for="stlUrlInput" class="block text-sm font-medium text-gray-700 mb-1">Cargar por URL "Raw" de GitHub</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+            <input type="url" id="stlUrlInput" placeholder="Pega aquí la URL 'Raw' del archivo STL" class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="loadModelButton" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-blue-700 transition duration-300">
+                Cargar Modelo
+            </button>
+        </div>
+        <p class="text-xs text-gray-500 mt-1">
+            (Consulta `instrucciones.md` para saber cómo obtener esta URL).
+        </p>
+
+        <!-- Divisor -->
+        <div class="my-6 border-t border-gray-200"></div>
+
+        <!-- Sección 2: Selección de Archivo y Análisis IA -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Columna Izquierda: Selector de Archivos -->
+            <div>
+                <label for="stlFileSelect" class="block text-sm font-medium text-gray-700 mb-1">O elegir un archivo de tu carpeta:</label>
+                <select id="stlFileSelect" class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Selecciona un archivo...</option>
+                </select>
+            </div>
+            
+            <!-- Columna Derecha: Análisis de IA -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Análisis con IA (Gemini)</label>
+                <button id="analyzeButton" class="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-green-700 transition duration-300 flex items-center justify-center gap-2" disabled>
+                    <span id="analyzeButtonText">Analizar Modelo con IA</span>
+                    <div id="analyzeSpinner" class="loading-spinner hidden"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenedor para la respuesta de la IA -->
+        <div id="aiResponseContainer" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
+            <h3 class="text-md font-semibold text-gray-800 mb-2">Análisis de la IA:</h3>
+            <p id="aiResponse" class="text-sm text-gray-700 whitespace-pre-wrap"></p>
+        </div>
+    </div>
+
+    <!-- Contenedor del Visor 3D Nativo -->
+    <div id="viewerContainer" class="flex-grow m-4 md:m-8 md:mt-0 shadow-lg rounded-lg overflow-hidden">
+        <div id="viewer">
+            <div id="modelLoadingMessage">Selecciona un modelo para cargarlo</div>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuración de Archivos ---
+        const BASE_RAW_URL = "https://raw.githubusercontent.com/Migue420/arpiedi-tienda-online/main/assets/images/";
+        const STL_FILES = [
+            "29101.stl",
+            "29103.stl",
+            "MAAITE CUADRADA.stl",
+            "MOCASIN NERVIO REDONDA.stl",
+            "ana maria pastor cordoba.stl",
+            "encarnacion RL.stl",
+            "gonzalo GC.stl",
+            "horma piso casco pilar cruz estrella.stl",
+            "m luisa pilar bruno.stl",
+            "ramon zafra solas.stl",
+            "sacha ruiz zapato.stl"
+        ];
+
+        // --- Elementos del DOM ---
+        const stlUrlInput = document.getElementById('stlUrlInput');
+        const loadModelButton = document.getElementById('loadModelButton');
+        const stlFileSelect = document.getElementById('stlFileSelect');
+        const analyzeButton = document.getElementById('analyzeButton');
+        const analyzeButtonText = document.getElementById('analyzeButtonText');
+        const analyzeSpinner = document.getElementById('analyzeSpinner');
+        const aiResponseContainer = document.getElementById('aiResponseContainer');
+        const aiResponse = document.getElementById('aiResponse');
+        const viewerDiv = document.getElementById('viewer');
+        const loadingMessage = document.getElementById('modelLoadingMessage');
+
+        // --- Variables de Estado ---
+        let currentModelUrl = "";
+
+        // --- Configuración del Visor 3D (Three.js) ---
+        let scene, camera, renderer, controls, currentModel;
+        const stlLoader = new THREE.STLLoader();
+
+        function initScene() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf3f4f6); // Color de fondo gris claro
+
+            // Cámara
+            camera = new THREE.PerspectiveCamera(75, viewerDiv.clientWidth / viewerDiv.clientHeight, 0.1, 1000);
+            camera.position.z = 100;
+            camera.position.y = 50;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(viewerDiv.clientWidth, viewerDiv.clientHeight);
+            viewerDiv.appendChild(renderer.domElement);
+
+            // Luces
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(50, 50, 50);
+            scene.add(directionalLight);
+
+            // Controles de Órbita (para mover la cámara)
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // Loop de animación
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Manejar redimensionamiento de ventana
+            window.addEventListener('resize', () => {
+                const width = viewerDiv.clientWidth;
+                const height = viewerDiv.clientHeight;
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+        }
+
+        // --- Función para Cargar el Modelo ---
+        function loadModel(url) {
+            if (!url) {
+                // Limpiar el modelo actual
+                if (currentModel) {
+                    scene.remove(currentModel);
+                    currentModel = null;
+                }
+                currentModelUrl = "";
+                analyzeButton.disabled = true;
+                loadingMessage.textContent = "Selecciona un modelo para cargarlo";
+                loadingMessage.style.display = 'block';
+                return;
+            }
+
+            // Mostrar mensaje de carga
+            loadingMessage.textContent = "Cargando modelo...";
+            loadingMessage.style.display = 'block';
+            
+            currentModelUrl = url;
+            analyzeButton.disabled = false;
+            aiResponseContainer.classList.add('hidden');
+
+            stlLoader.load(
+                url,
+                (geometry) => {
+                    // Limpiar modelo anterior
+                    if (currentModel) {
+                        scene.remove(currentModel);
+                    }
+
+                    // Material del modelo
+                    const material = new THREE.MeshStandardMaterial({
+                        color: 0xcccccc, // Color gris
+                        metalness: 0.2,
+                        roughness: 0.5
+                    });
+                    
+                    currentModel = new THREE.Mesh(geometry, material);
+                    
+                    // Centrar la geometría y escalar
+                    geometry.center();
+                    
+                    // Escalar el modelo para que quepa bien
+                    geometry.computeBoundingSphere();
+                    const radius = geometry.boundingSphere.radius;
+                    const scaleFactor = 50 / radius; // Ajusta '50' para escalar
+                    currentModel.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+                    scene.add(currentModel);
+                    loadingMessage.style.display = 'none'; // Ocultar mensaje de carga
+                },
+                (xhr) => {
+                    // Progreso de carga
+                    const percent = Math.floor((xhr.loaded / xhr.total) * 100);
+                    loadingMessage.textContent = `Cargando modelo... ${percent}%`;
+                },
+                (error) => {
+                    // Error de carga
+                    console.error("Error cargando STL:", error);
+                    loadingMessage.textContent = "Error al cargar el modelo.";
+                    analyzeButton.disabled = true;
+                }
+            );
+        }
+
+        // --- Función de Reintento de Fetch (Backoff Exponencial) ---
+        async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
+            try {
+                return await fetch(url, options);
+            } catch (err) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithRetry(url, options, retries - 1, delay * 2);
+                } else {
+                    throw new Error('No se pudo conectar con la API después de varios intentos.');
+                }
+            }
+        }
+
+        // --- Función para Analizar con IA (Gemini) ---
+        async function analyzeFile() {
+            if (!currentModelUrl) {
+                console.warn("Se intentó analizar sin un modelo cargado.");
+                aiResponse.textContent = "Por favor, carga un modelo primero.";
+                aiResponseContainer.classList.remove('hidden');
+                return;
+            }
+
+            const filename = currentModelUrl.substring(currentModelUrl.lastIndexOf('/') + 1);
+
+            analyzeButtonText.textContent = "Analizando...";
+            analyzeSpinner.classList.remove('hidden');
+            analyzeButton.disabled = true;
+            aiResponseContainer.classList.add('hidden');
+
+            const systemPrompt = `Eres un experto en diseño 3D de calzado y hormas. Tu tarea es analizar el nombre de un archivo STL y proporcionar una breve descripción de lo que probablemente contiene. Infiere el propósito (¿horma, zapato, componente?), el estilo (¿vestir, casual?) y el posible cliente (¿hombre, mujer, nombre propio?). Responde en español de forma concisa.`;
+            const userQuery = `Analiza este nombre de archivo: "${filename}"`;
+            
+            const apiKey = ""; // Se inyectará en el entorno de ejecución
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error de la API: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates[0].content?.parts?.[0]?.text) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    aiResponse.textContent = text;
+                    aiResponseContainer.classList.remove('hidden');
+                } else {
+                    throw new Error("La respuesta de la IA no tuvo el formato esperado.");
+                }
+
+            } catch (error) {
+                console.error("Error al llamar a la API de Gemini:", error);
+                aiResponse.textContent = `Error al contactar con la IA: ${error.message}`;
+                aiResponseContainer.classList.remove('hidden');
+            } finally {
+                analyzeButtonText.textContent = "Analizar Modelo con IA";
+                analyzeSpinner.classList.add('hidden');
+                analyzeButton.disabled = false;
+            }
+        }
+
+        // --- Inicialización y Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Inicializar la escena 3D
+            initScene();
+
+            // 2. Poblar el menú desplegable
+            STL_FILES.forEach(filename => {
+                const option = document.createElement('option');
+                option.value = filename;
+                option.textContent = filename;
+                stlFileSelect.appendChild(option);
+            });
+        });
+
+        // 3. Listener para el botón "Cargar Modelo" (manual)
+        loadModelButton.addEventListener('click', () => {
+            loadModel(stlUrlInput.value);
+        });
+
+        // 4. Listener para el menú desplegable (automático)
+        stlFileSelect.addEventListener('change', (e) => {
+            const selectedFile = e.target.value;
+            if (selectedFile) {
+                const fullUrl = BASE_RAW_URL + selectedFile;
+                stlUrlInput.value = fullUrl; // Actualizar el input
+                loadModel(fullUrl); // Cargar el modelo automáticamente
+            } else {
+                stlUrlInput.value = "";
+                loadModel(null); // Limpiar si se selecciona "Selecciona un archivo..."
+            }
+        });
+
+        // 5. Listener para el botón "Analizar con IA"
+        analyzeButton.addEventListener('click', analyzeFile);
+
+    </script>
+
+</body>
+</html>

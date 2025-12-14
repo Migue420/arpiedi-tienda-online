@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente de Chat - Arpiedi</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Gris claro de fondo */
+        }
+
+        /* Estilo para la burbuja de chat flotante */
+        #chat-bubble {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: #2563eb; /* Azul primario */
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        #chat-bubble:hover {
+            transform: scale(1.1);
+            background-color: #1d4ed8; /* Azul más oscuro */
+        }
+        #chat-bubble svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Contenedor del chat */
+        #chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 90%;
+            max-width: 400px;
+            height: 70vh;
+            max-height: 600px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+            z-index: 1000;
+        }
+        #chat-container.open {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Scrollbar personalizado para el área de mensajes */
+        #chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        #chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        #chat-messages::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        #chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Estilos para el enlace en el mensaje del bot */
+        .bot-link {
+            color: #2563eb; /* Azul */
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .bot-link:hover {
+            color: #1d4ed8; /* Azul más oscuro */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6">
+
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Página de Demostración - Arpiedi</h1>
+        <p class="text-gray-600">Esta es una demostración de cómo se vería el asistente de chat en tu sitio web. Haz clic en la burbuja azul en la esquina inferior derecha para comenzar.</p>
+    </div>
+
+    <div id="chat-bubble">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.722.537a5.25 5.25 0 0 1-4.495-2.262l-.94-1.646a5.25 5.25 0 0 0-4.495-2.262l-3.722-.537A2.25 2.25 0 0 1 2.25 13.17V8.884c0-1.136.847-2.1 1.98-2.193l3.722-.537a5.25 5.25 0 0 1 4.495 2.262l.94 1.646a5.25 5.25 0 0 0 4.495 2.262l3.722.537Z" />
+        </svg>
+    </div>
+
+    <div id="chat-container">
+        <header class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+            <div>
+                <h2 class="text-lg font-bold">Asistente Arpiedi</h2>
+                <p class="text-sm text-blue-100">En línea</p>
+            </div>
+            <button id="close-chat" class="text-white hover:text-blue-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-gray-50">
+            </div>
+
+        <footer class="p-4 bg-white border-t border-gray-200">
+            <div class="flex items-center space-x-2">
+                <input type="text" id="user-input" placeholder="Escribe tu pregunta..." class="flex-1 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="send-btn" class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // --- ELEMENTOS DEL DOM ---
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatContainer = document.getElementById('chat-container');
+        const closeChatBtn = document.getElementById('close-chat');
+        const sendBtn = document.getElementById('send-btn');
+        const userInput = document.getElementById('user-input');
+        const chatMessages = document.getElementById('chat-messages');
+
+        // --- MANEJO DE EVENTOS ---
+        chatBubble.addEventListener('click', () => toggleChat(true));
+        closeChatBtn.addEventListener('click', () => toggleChat(false));
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // --- LÓGICA DEL CHAT ---
+        
+        /**
+         * Muestra u oculta la ventana del chat.
+         * @param {boolean} open - true para abrir, false para cerrar.
+         */
+        function toggleChat(open) {
+            if (open) {
+                chatContainer.classList.add('open');
+                chatBubble.style.display = 'none'; // Oculta la burbuja cuando el chat está abierto
+                displayWelcomeMessage();
+            } else {
+                chatContainer.classList.remove('open');
+                chatBubble.style.display = 'flex'; // Muestra la burbuja de nuevo
+            }
+        }
+
+        /**
+         * Muestra el mensaje de bienvenida inicial.
+         */
+        function displayWelcomeMessage() {
+            if (chatMessages.children.length === 0) {
+                 const welcomeText = `¡Hola! &#128075; Soy tu asistente de Arpiedi. <br><br>Puedes hacerme preguntas frecuentes o, para consultas más complejas, puedes hablar con mi versión avanzada en este enlace:<br><a href="https://notebooklm.google.com/notebook/9c658c16-36f7-4bd3-97d0-11985eb0323e" target="_blank" class="bot-link">Abrir Asistente Experto</a>`;
+                 addMessage('bot', welcomeText);
+            }
+        }
+
+        /**
+         * Procesa y envía el mensaje del usuario.
+         */
+        function sendMessage() {
+            const messageText = userInput.value.trim();
+            if (messageText === '') return;
+
+            addMessage('user', messageText);
+            userInput.value = '';
+
+            // Simula una respuesta del bot después de un breve retraso
+            setTimeout(() => {
+                const botResponse = getBotResponse(messageText);
+                addMessage('bot', botResponse);
+            }, 800);
+        }
+
+        /**
+         * Añade un mensaje al área de chat.
+         * @param {string} sender - 'user' o 'bot'.
+         * @param {string} text - El contenido del mensaje.
+         */
+        function addMessage(sender, text) {
+            const messageElement = document.createElement('div');
+            const isBot = sender === 'bot';
+            
+            messageElement.className = `flex mb-4 ${isBot ? 'justify-start' : 'justify-end'}`;
+            
+            const messageBubbleClass = isBot 
+                ? 'bg-gray-200 text-gray-800' 
+                : 'bg-blue-600 text-white';
+
+            // Reemplaza **texto** con <strong>texto</strong> para negritas
+            const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            messageElement.innerHTML = `
+                <div class="max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-2xl ${messageBubbleClass}" style="word-wrap: break-word;">
+                    ${formattedText}
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageElement);
+            // Desplaza automáticamente al último mensaje
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // --- BASE DE CONOCIMIENTO (EL "CEREBRO" DEL CHATBOT) ---
+        const knowledgeBase = [
+          {
+            "intent": "info_empresa",
+            "keywords": ["empresa", "taller", "quiénes somos", "qué tipo de empresa", "arpiedi"],
+            "response": "Somos un taller familiar de **Artesanos del Calzado**, dedicados generación tras generación al arte de elaborar calzado y guarniciones de piel a mano. Nos especializamos en **calzado a medida y cómodo**, ofreciendo la más alta calidad y diseño, con productos **garantizados de por vida**."
+          },
+          {
+            "intent": "info_ubicacion_contacto",
+            "keywords": ["ubicación", "dónde están", "direccion", "tienda", "taller", "contacto", "teléfono", "email", "correo"],
+            "response": "Nuestra tienda y taller de **Artesanos del Calzado** están ubicados en **San Antón, 11 - 47100 Tordesillas (Valladolid), Castilla y León, España**. Puede contactarnos llamando al **(+34) 983 77 08 65** o al **(+34) 658 85 61 24**, o enviando un correo electrónico a **info@calzadoamedida.com**."
+          },
+          {
+            "intent": "info_productos_calzado_medida",
+            "keywords": ["calzado a medida", "zapatos personalizados", "hechos a mano", "qué ofrecen", "tipos de calzado a medida"],
+            "response": "Ofrecemos **calzado a medida** totalmente personalizado, fabricado específicamente para las características anatómicas de sus pies. El proceso incluye una **minuciosa toma de medidas** para crear una horma exacta de su pie. Podemos trabajar sobre hormas adaptadas para deformidades comunes (como dedos martillo o juanetes) o sobre **moldes de los pies** para casos más complejos como grandes deformidades, úlceras o amputaciones. Le ofrecemos un alto grado de personalización en diseño, tipo de cuero y acabados."
+          },
+          {
+            "intent": "info_materiales_garantia",
+            "keywords": ["materiales", "piel", "cuero", "calidad", "garantía", "garantia", "durabilidad"],
+            "response": "Utilizamos productos de **curtición artesanal y natural** de Villarramiel (Palencia), obteniendo pieles de **alta calidad y resistencia**. Para pies sensibles o diabéticos, empleamos pieles más suaves y forros especiales de plastazote u ova que ofrecen confort adicional y evitan roces. Nuestros productos están **garantizados de por vida**, lo que los convierte en una **inversión a largo plazo**."
+          },
+          {
+            "intent": "info_calzado_ortopedico",
+            "keywords": ["calzado ortopédico", "calzado ortopedico", "zapatos especiales", "qué es", "características", "tipos de calzado ortopédico"],
+            "response": "El **calzado ortopédico** es un zapato especializado diseñado para ofrecer **mayor soporte, estabilidad y amortiguación** a personas con problemas en los pies o en recuperación de lesiones. Sus características clave incluyen un soporte mejorado para el arco y el tobillo, absorción de impactos, distribución uniforme de la presión y un ajuste personalizable. Algunos tipos comunes son los **zapatos extra profundos**, con **fondo rockero**, **postoperatorios**, de **control de movimiento** y **zapatos para diabéticos**."
+          },
+          {
+            "intent": "info_afecciones_tratadas",
+            "keywords": ["problemas de pies", "qué trata", "deformidades", "enfermedades", "pie diabético", "pie diabetico", "juanetes", "artritis", "neuropatía", "neuropatia"],
+            "response": "Nuestro calzado está diseñado para corregir, proteger y compensar **deformidades y patologías podales complejas**. Ayudamos a personas con **pie diabético** (incluyendo úlceras, neuropatía o problemas de circulación), **artritis**, **afecciones neuropáticas**, así como deformidades comunes como **juanetes**, **dedos martillo**, pies planos, pie de Charcot y dismetrías o problemas de pisada. También abordamos la atrofia muscular y las dificultades de movilidad."
+          },
+          {
+            "intent": "info_certificado_discapacidad_beneficios",
+            "keywords": ["certificado de discapacidad", "beneficios", "ventajas", "qué es", "para qué sirve"],
+            "response": "El certificado de discapacidad es un documento oficial que acredita un grado de discapacidad y otorga **derechos y beneficios sociales, fiscales y laborales** en España. Para obtenerlo, se requiere un **grado de discapacidad igual o superior al 33%**. Las ventajas incluyen **ayudas económicas** (como pensiones no contributivas para ≥65% de discapacidad), **beneficios fiscales** (reducciones en IRPF, IVA reducido en productos ortopédicos), ayudas para **vivienda y educación**, y ventajas en **movilidad** (tarjeta de estacionamiento, descuentos en transporte). Este documento tiene validez en todo el territorio español."
+          },
+          {
+            "intent": "info_tramite_certificado_discapacidad",
+            "keywords": ["cómo solicitar certificado", "proceso discapacidad", "requisitos", "dónde pedir", "plazo certificado"],
+            "response": "El proceso para solicitar el certificado de discapacidad es voluntario y gratuito, gestionado por cada Comunidad Autónoma. Implica una **valoración médica, social y psicológica** por un tribunal o equipo multiprofesional en los **Centros Base** de su Comunidad Autónoma. Necesitará **informes médicos actualizados** y su DNI. El plazo de resolución es de hasta **seis meses desde la solicitud**, aunque en la práctica puede ser más largo. Existe un **trámite de urgencia** que reduce el tiempo a la mitad para casos especiales de salud o vulnerabilidad."
+          },
+          {
+            "intent": "info_financiacion_calzado_ortopedico",
+            "keywords": ["financiación", "financiacion", "seguridad social", "ayudas", "subvenciones", "coste", "precio"],
+            "response": "El **Sistema Nacional de Salud (SNS)** en España cubre el calzado ortopédico para grandes deformidades (código 06 33 90) y para pies diabéticos, artríticos y neuropáticos. La modalidad más común de financiación es el **reintegro de gastos**, donde usted abona el coste y luego solicita el reembolso de la parte cubierta por la administración. El **co-pago** para este tipo de calzado suele ser de **36€**, pero es de **0€ para categorías exentas**. Las subvenciones y trámites específicos varían según cada Comunidad Autónoma."
+          },
+          {
+            "intent": "info_diferencia_ortesis_ortopedico",
+            "keywords": ["diferencia ortesis ortopédico", "ortesis ortopedico", "plantillas vs zapatos", "ortóticos", "plantillas ortopédicas"],
+            "response": "Las **órtesis** son dispositivos (como plantillas o insertos ortopédicos) que se colocan **dentro de zapatos normales** para dar soporte, alinear y corregir deformidades leves a moderadas. El **calzado ortopédico**, en cambio, es un **zapato especializado** que reemplaza el calzado habitual, ofreciendo un soporte y amortiguación mayores para afecciones graves del pie. En muchos casos, la mejor solución es una combinación de calzado ortopédico con órtesis personalizadas."
+          },
+          {
+            "intent": "info_cuidado_pie",
+            "keywords": ["cuidado pies", "prevención", "prevencion", "higiene", "consejos pies", "pie diabético", "salud del pie"],
+            "response": "El cuidado del pie, especialmente para personas mayores o con diabetes, implica **higiene diaria** (lavado con agua tibia y jabón neutro, secado minucioso entre los dedos). Se recomienda el uso de **calzado flexible y adecuado**, evitar el uso excesivo y alternar pares de zapatos para airear los pies. Para el pie diabético, es crucial la **exploración anual por un profesional sanitario** y el uso de calzado que prevenga lesiones, minimice la fricción y redistribuya la presión. También son beneficiosos los ejercicios para los pies y los masajes."
+          },
+          {
+            "intent": "info_ferias_participacion",
+            "keywords": ["ferias", "exposiciones", "eventos", "presencia en eventos"],
+            "response": "Como **Artesanos del Calzado**, hemos participado en numerosas ferias nacionales e internacionales, incluyendo F.I.N.A.R. en Madrid, la Exposición de Amberes en Bélgica, Expoconsumo en Bilbao, la Feria Internacional de Artesanía de Gerona, la Feria Mundial del Caballo de Sevilla, y la Feria Iberoamericana de Santo Domingo de la Calzada. También hemos estado presentes en diversas Ferias de Artesanía en múltiples ciudades españolas y Aveiro, Portugal."
+          },
+          {
+            "intent": "default",
+            "keywords": [],
+            "response": "Lo siento, no he entendido tu pregunta. ¿Puedes reformularla de otra manera? También puedes contactarnos directamente para una atención más personalizada."
+          }
+        ];
+        
+        /**
+         * Normaliza un texto: lo convierte a minúsculas, quita acentos y signos de puntuación.
+         * @param {string} text - El texto a normalizar.
+         * @returns {string} El texto normalizado.
+         */
+        function normalizeText(text) {
+            if (typeof text !== 'string') return '';
+            return text
+                .toLowerCase()
+                .normalize("NFD") // Separa los caracteres de sus acentos
+                .replace(/[\u0300-\u036f]/g, "") // Elimina los acentos
+                .replace(/[^\w\s]/gi, ''); // Elimina la mayoría de signos de puntuación
+        }
+
+        /**
+         * Genera una respuesta del bot buscando en la base de conocimiento.
+         * @param {string} userInputText - El mensaje del usuario.
+         * @returns {string} La respuesta del bot.
+         */
+        function getBotResponse(userInputText) {
+            // Normaliza la entrada del usuario UNA SOLA VEZ
+            const normalizedInput = normalizeText(userInputText);
+
+            // Busca la primera entrada en nuestra base de conocimiento que coincida.
+            const foundEntry = knowledgeBase.find(entry => 
+                // Compara la entrada normalizada con cada palabra clave también normalizada
+                entry.keywords.some(keyword => normalizedInput.includes(normalizeText(keyword)))
+            );
+
+            // Si encuentra una coincidencia, devuelve su respuesta.
+            if (foundEntry && foundEntry.keywords.length > 0) {
+                return foundEntry.response;
+            }
+
+            // Si no encuentra nada, devuelve la respuesta por defecto (default).
+            return knowledgeBase.find(entry => entry.intent === 'default').response;
+        }
+
+    </script>
+</body>
+</html>

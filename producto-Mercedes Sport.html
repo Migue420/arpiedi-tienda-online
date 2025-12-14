@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arpiedi - Mercedes Sport</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #2C3E50;
+            border-radius: 2px;
+        }
+        .color-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .color-dot:hover {
+            transform: scale(1.1);
+        }
+        .color-dot.selected {
+            border: 2px solid #2C3E50; /* Dark blue border for selected color */
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-800">Arpiedi®</a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium">Inicio</a></li>
+                    <li><a href="modelos-senora.html" class="text-blue-700 font-medium">Modelos Señora</a></li>
+                    <li><a href="modelos-caballero.html" class="text-gray-600 hover:text-blue-700 font-medium">Modelos Caballero</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Novedades</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Sobre Nosotros</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-700 font-medium">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="bg-gray-200 py-3 px-4">
+        <div class="container mx-auto">
+            <ol class="flex text-gray-600 text-sm">
+                <li><a href="index.html" class="hover:underline">Inicio</a></li>
+                <li class="mx-2">/</li>
+                <li><a href="modelos-senora.html" class="hover:underline">Modelos Señora</a></li>
+                <li class="mx-2">/</li>
+                <li><span class="font-semibold">Mercedes Sport</span></li>
+            </ol>
+        </div>
+    </nav>
+
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+            <div class="flex flex-col items-center">
+                <img id="main-product-image" src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/SE%C3%91ORA/mercedes%20sport/mercedes%20sport.png" alt="Mercedes Sport - Vista Principal" class="w-full max-w-lg rounded-lg shadow-xl mb-4 object-contain h-96 md:h-[500px]">
+
+                <div class="flex space-x-2 mt-4">
+                    <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/SE%C3%91ORA/mercedes%20sport/mercedes%20sport.png" alt="Mercedes Sport - Miniatura Principal" class="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-blue-600 transition-colors duration-200" onclick="changeMainImage(this.src)">
+
+                    <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/SE%C3%91ORA/mercedes%20sport/mercedes%20sport%20per.png" alt="Mercedes Sport - Miniatura Perspectiva" class="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-gray-300 hover:border-blue-600 transition-colors duration-200" onclick="changeMainImage(this.src)">
+
+                    <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/SE%C3%91ORA/mercedes%20sport/mercedes%20sport%20sup.png" alt="Mercedes Sport - Miniatura Superior" class="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-gray-300 hover:border-blue-600 transition-colors duration-200" onclick="changeMainImage(this.src)">
+
+                    <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/SE%C3%91ORA/mercedes%20sport/mercedes%20sport%20tras.png" alt="Mercedes Sport - Miniatura Trasera" class="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-gray-300 hover:border-blue-600 transition-colors duration-200" onclick="changeMainImage(this.src)">
+
+                    </div>
+            </div>
+
+            <div class="md:pl-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Mercedes Sport</h1>
+                <p class="text-gray-700 text-lg mb-6">El calzado ideal para combinar la actividad diaria con la máxima comodidad y el soporte ortopédico que necesitas. Diseño moderno y adaptabilidad total.</p>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Características Clave:</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>**FORRO:** Cabra o Vegano</li>
+                        <li>**PISO:** Goma</li>
+                        <li>**HEBILLA:** Sin Cromo</li>
+                        <li>**HORMA:** Asimétrica</li>
+                        <li>**TALLAS Y DISPONIBILIDAD:** Tallas Estándar y a Medida</li>
+                    </ul>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Versión de Material:</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="version_material" value="serraje" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2 text-gray-700">Serraje</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="version_material" value="cuero_brillo" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2 text-gray-700">Cuero Brillo</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="version_material" value="napa_vegana" class="form-radio text-blue-600 h-5 w-5">
+                            <span class="ml-2 text-gray-700">Napa Vegana</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Colores Disponibles:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="color-dot bg-black selected" title="Negro" onclick="selectColor(this, 'negro')"></div>
+                        <div class="color-dot bg-gray-700" title="Gris Oscuro" onclick="selectColor(this, 'gris-oscuro')"></div>
+                        <div class="color-dot bg-amber-900" title="Marrón" onclick="selectColor(this, 'marron')"></div>
+                        </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Tallas:</h3>
+                    <select class="block w-full md:w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Selecciona tu talla</option>
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                        <option value="a-medida">A MEDIDA (Contactar para detalles)</option>
+                    </select>
+                </div>
+
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Solicitar Calzado a Medida / Contactar
+                </button>
+                <p class="text-center text-sm text-gray-500 mt-4">Nos pondremos en contacto para gestionar tu pedido personalizado.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
+                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
+                <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function changeMainImage(src) {
+            document.getElementById('main-product-image').src = src;
+            const thumbnails = document.querySelectorAll('.flex.space-x-2.mt-4 img');
+            thumbnails.forEach(thumb => {
+                if (thumb.src === src) {
+                    thumb.classList.add('border-blue-600');
+                    thumb.classList.remove('border-gray-300');
+                } else {
+                    thumb.classList.remove('border-blue-600');
+                    thumb.classList.add('border-gray-300');
+                }
+            });
+        }
+
+        function selectColor(element, colorName) {
+            const colorDots = document.querySelectorAll('.color-dot');
+            colorDots.forEach(dot => dot.classList.remove('selected'));
+            element.classList.add('selected');
+            console.log('Color seleccionado:', colorName);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstThumbnail = document.querySelector('.flex.space-x-2.mt-4 img');
+            if (firstThumbnail) {
+                firstThumbnail.classList.add('border-blue-600');
+                firstThumbnail.classList.remove('border-gray-300');
+            }
+        });
+    </script>
+
+</body>
+</html>

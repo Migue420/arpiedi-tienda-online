@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/
+    
+    # Permitir acceso a archivos que existen
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+    
+    # Permitir acceso a directorios que existen
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+</IfModule>
+
+# Deshabilitar listado de directorios
+Options -Indexes
+
+# Configuración PHP
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 5M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>
