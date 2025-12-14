@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Toma de Medidas - Arpiedi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .input-std { @apply w-full p-2 border border-gray-300 rounded text-sm focus:border-blue-900 focus:ring-1 focus:ring-blue-900 outline-none; }
+        .input-cell { @apply w-full p-2 bg-white border border-gray-200 rounded text-center font-bold text-gray-800 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-all; }
+        .label-header { @apply text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block; }
+        .section-title { @apply text-lg font-bold text-gray-800 border-b-2 border-blue-900 pb-2 mb-6 mt-8 flex items-center gap-2; }
+        
+        /* Estilos específicos para la tabla visual */
+        .col-izq { @apply bg-blue-50/50; }
+        .col-der { @apply bg-orange-50/50; }
+        .row-measure:hover { @apply bg-gray-50; }
+        .measure-label { @apply font-bold text-gray-700 text-sm; }
+        .measure-code { @apply text-xs text-gray-400 font-mono ml-1; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center font-serif font-bold">A</div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">Ficha Técnica</h1>
+                    <p class="text-xs text-gray-400">Toma de Medidas Digital</p>
+                </div>
+            </div>
+            <a href="/" class="text-sm bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded transition-colors border border-slate-700">Volver</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <form id="medidasForm" class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+            
+            <!-- 1. CABECERA DEL PACIENTE -->
+            <div class="p-6 md:p-8 bg-slate-50 border-b border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="label-header">Paciente / Cliente</label>
+                        <input type="text" name="paciente" required class="input-std font-bold text-lg" placeholder="Nombre completo">
+                    </div>
+                    <div>
+                        <label class="label-header">DNI</label>
+                        <input type="text" name="dni" class="input-std">
+                    </div>
+                    <div>
+                        <label class="label-header">Fecha</label>
+                        <input type="date" name="fecha" class="input-std" value="">
+                    </div>
+                    <div>
+                        <label class="label-header">Modelo</label>
+                        <input type="text" name="modelo" class="input-std" placeholder="Ref. Modelo">
+                    </div>
+                    <div>
+                        <label class="label-header">Color</label>
+                        <input type="text" name="color" class="input-std">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="label-header">Ortopedia / Centro</label>
+                        <input type="text" name="cliente" class="input-std" placeholder="Centro solicitante">
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-8">
+                
+                <!-- 2. TABLA VISUAL DE MEDIDAS (El cambio principal) -->
+                <h2 class="section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                    Medidas Antropométricas (cm)
+                </h2>
+
+                <!-- Imagen Referencia (Placeholder visual) -->
+                <div class="mb-6 flex justify-center">
+                    <div class="relative w-full max-w-2xl h-48 border-2 border-dashed border-gray-200 rounded-lg flex items-center justify-center bg-gray-50 overflow-hidden group">
+                        <!-- Aquí podrías poner la imagen real del esquema -->
+                        <div class="text-center text-gray-400">
+                            <p class="text-4xl mb-2">🦶📏</p>
+                            <p class="text-xs uppercase font-bold">Esquema de Referencia</p>
+                            <p class="text-[10px]">(P) Largo - (A) Metatarsal - (B) Empeine</p>
+                        </div>
+                        <!-- Overlay informativo al pasar el mouse -->
+                        <div class="absolute inset-0 bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity p-4 text-xs text-gray-600 text-center">
+                            A: Metatarsal | B: Empeine | C: Talón-Empeine | D: Dedos | E: Caña | P: Largo Total
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla Comparativa -->
+                <div class="overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-xs uppercase text-white">
+                                <th class="p-3 bg-blue-900/90 w-1/3 text-center border-r border-white/20">Pie IZQUIERDO</th>
+                                <th class="p-3 bg-gray-800 w-1/3 text-center">CONCEPTO</th>
+                                <th class="p-3 bg-orange-700/90 w-1/3 text-center border-l border-white/20">Pie DERECHO</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <!-- P: Largo Pie -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_P" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Largo Pie</span> <span class="measure-code">(P)</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_P" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- Largo Plantilla -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_plantilla" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Largo Plantilla</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_plantilla" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- A: Metatarsal -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_A" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Perím. Metatarsal</span> <span class="measure-code">(A)</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_A" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- C: Empeine -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_C" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Perím. Empeine</span> <span class="measure-code">(C)</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_C" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- G: Talón -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_G" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Perím. Talón</span> <span class="measure-code">(G)</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_G" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- D: Dedos -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_D" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Altura Dedos</span> <span class="measure-code">(D)</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_D" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- Maleolo -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_maleolo" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Altura Maléolo Ext.</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_maleolo" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                            <!-- E: Caña -->
+                            <tr class="row-measure">
+                                <td class="p-2 col-izq"><input type="number" step="0.1" name="izq_E" class="input-cell text-blue-900" placeholder="0.0"></td>
+                                <td class="p-2 text-center"><span class="measure-label">Altura Caña</span> <span class="measure-code">(E)</span></td>
+                                <td class="p-2 col-der"><input type="number" step="0.1" name="der_E" class="input-cell text-orange-900" placeholder="0.0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Observaciones unificadas -->
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-blue-800 uppercase mb-1 block">Diagnóstico Izquierdo</label>
+                        <textarea name="izq_notas" rows="3" class="w-full p-2 border border-blue-200 rounded bg-blue-50/30 text-sm focus:border-blue-500 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-orange-800 uppercase mb-1 block">Diagnóstico Derecho</label>
+                        <textarea name="der_notas" rows="3" class="w-full p-2 border border-orange-200 rounded bg-orange-50/30 text-sm focus:border-orange-500 outline-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- 3. ESPECIFICACIONES (Checkbox Grid) -->
+                <h2 class="section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    Detalles de Fabricación
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
+                    
+                    <!-- Grupo 1 -->
+                    <div class="space-y-3 bg-gray-50 p-3 rounded">
+                        <p class="font-bold text-gray-700 border-b pb-1">Talón y Contrafuerte</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2"><input type="radio" name="tipo_talon" value="Normal" checked> Talón Normal</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="tipo_talon" value="Curvado"> Talón Curvado</label>
+                            <select name="contrafuerte" class="w-full mt-1 p-1 border rounded bg-white">
+                                <option value="Standard">Contraf. Standard</option>
+                                <option value="Blando">Contraf. Blando</option>
+                                <option value="Duro">Contraf. Duro</option>
+                                <option value="Extra Duro">Contraf. Extra Duro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grupo 2 -->
+                    <div class="space-y-3 bg-gray-50 p-3 rounded">
+                        <p class="font-bold text-gray-700 border-b pb-1">Componentes</p>
+                        <div class="space-y-2">
+                            <select name="tope" class="w-full p-1 border rounded bg-white">
+                                <option value="">Seleccionar Tope...</option>
+                                <option value="Standard">Tope Standard</option>
+                                <option value="Blando">Tope Blando</option>
+                                <option value="Duro">Tope Duro</option>
+                            </select>
+                            <select name="forro" class="w-full p-1 border rounded bg-white">
+                                <option value="Piel">Forro Piel</option>
+                                <option value="Textil">Forro Textil</option>
+                                <option value="Plastazote">Plastazote</option>
+                                <option value="Microfibra">Microfibra</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grupo 3 -->
+                    <div class="space-y-3 bg-gray-50 p-3 rounded">
+                        <p class="font-bold text-gray-700 border-b pb-1">Suela y Cierre</p>
+                        <div class="space-y-2">
+                            <select name="piso" class="w-full p-1 border rounded bg-white">
+                                <option value="Goma">Piso Goma</option>
+                                <option value="Cuero">Piso Cuero</option>
+                                <option value="PU">Piso PU</option>
+                                <option value="Microporoso">Microporoso</option>
+                            </select>
+                            <select name="cierre" class="w-full p-1 border rounded bg-white">
+                                <option value="Cordón">Cierre Cordón</option>
+                                <option value="Velcro">Cierre Velcro</option>
+                                <option value="Velcro Ida/Vuelta">V. Ida/Vuelta</option>
+                                <option value="Hebilla">Hebilla</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grupo 4 -->
+                    <div class="space-y-3 bg-gray-50 p-3 rounded">
+                        <p class="font-bold text-gray-700 border-b pb-1">Especiales</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2"><input type="checkbox" name="gran_deformidad"> Gran Deformidad</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" name="desalineacion"> Desalineación</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" name="asimetria"> Igualar Largos</label>
+                            <input type="text" name="plataforma_info" placeholder="Plataforma/Cuña..." class="w-full mt-1 p-1 border-b bg-transparent text-xs focus:border-blue-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FOOTER CON ACCIONES -->
+            <div class="bg-gray-50 p-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-400 text-center md:text-left">
+                    Al guardar, se generará una orden de fabricación con estado "Medición".<br>
+                    Revise todos los datos antes de confirmar.
+                </p>
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button type="button" onclick="window.location.href='/'" class="flex-1 md:flex-none px-6 py-3 border border-gray-300 text-gray-600 rounded font-bold hover:bg-white transition-colors">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="flex-1 md:flex-none px-8 py-3 bg-blue-900 text-white rounded font-bold hover:bg-blue-800 shadow-lg transform transition hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <span>Guardar Ficha</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </main>
+
+    <script>
+        // Establecer fecha de hoy por defecto
+        document.querySelector('input[name="fecha"]').valueAsDate = new Date();
+
+        // Lógica de Envío (Idéntica a la versión anterior para mantener compatibilidad)
+        const API_URL = 'http://localhost:3000/api/medidas'; 
+
+        document.getElementById('medidasForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnGuardar');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = 'Guardando...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            data.gran_deformidad = formData.get('gran_deformidad') === 'on';
+            data.desalineacion = formData.get('desalineacion') === 'on';
+            data.asimetria = formData.get('asimetria') === 'on';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    Swal.fire({
+                        title: '¡Ficha Guardada!',
+                        html: `Ficha registrada correctamente.<br><span class="text-2xl font-bold text-blue-900 mt-2 block">${result.id}</span>`,
+                        icon: 'success',
+                        confirmButtonColor: '#1e3a8a'
+                    }).then(() => {
+                        window.location.href = '/'; 
+                    });
+                } else {
+                    throw new Error(result.error || 'Error desconocido');
+                }
+            } catch (error) {
+                console.error(error);
+                let msg = 'Error al guardar.';
+                if (error.message.includes('Failed to fetch')) msg += ' ¿Está la App (localhost:3000) encendida?';
+                Swal.fire('Error', msg, 'error');
+            } finally {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75');
+            }
+        });
+    </script>
+</body>
+</html>
