@@ -140,15 +140,20 @@
             };
 
             try {
+                // Intentamos conectar con la API local
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(pedido)
                 });
 
+                if (!response.ok) {
+                    throw new Error(`Error del servidor: ${response.status}`);
+                }
+
                 const data = await response.json();
 
-                if (response.ok && data.success) {
+                if (data.success) {
                     Swal.fire({
                         title: '¡Pedido Recibido!',
                         text: `Tu pedido #${data.id} se ha guardado correctamente.`,
@@ -161,12 +166,21 @@
                 } else {
                     throw new Error(data.error || 'Error desconocido');
                 }
+
             } catch (error) {
-                console.error(error);
+                console.error("Error al enviar pedido:", error);
+                
+                // Mensaje amigable explicando POR QUÉ falla (CORS o Servidor apagado)
+                let mensajeError = 'No pudimos conectar con el servidor.';
+                if (error.message.includes('Failed to fetch')) {
+                    mensajeError = 'Error de conexión. Asegúrate de que tu aplicación local (localhost:3000) está encendida. Si estás abriendo este archivo directamente en el navegador, es posible que el navegador bloquee la conexión por seguridad.';
+                }
+
                 Swal.fire({
                     title: 'Error de conexión',
-                    text: 'No pudimos conectar con el servidor. Asegúrate de que tu App Local (localhost:3000) está encendida.',
-                    icon: 'error'
+                    text: mensajeError,
+                    icon: 'error',
+                    footer: '<a href="#">¿Necesitas ayuda? Contacta con soporte</a>'
                 });
             } finally {
                 btn.innerText = originalText;
