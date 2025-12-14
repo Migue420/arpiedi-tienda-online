@@ -1,296 +1,181 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arpiedi - Carrito de Compras</title>
+    <title>Carrito de Compras - Arpiedi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f8f8; }
+        .spinner { border: 4px solid rgba(0, 0, 0, 0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #09f; animation: spin 1s ease infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
+<body class="bg-gray-50">
 
-<body class="antialiased bg-gray-50">
-
-    <section class="bg-white py-4 text-center">
-        <a href="index.html" class="block w-full">
-            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png"
-                alt="Arpiedi Logo" class="mx-auto h-auto max-h-40 object-contain">
-        </a>
-    </section>
-
-    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-center items-center">
-            <nav>
-                <ul id="main-nav-links" class="flex space-x-6 flex-wrap justify-center">
-                    <li><a href="index.html" class="text-gray-600 hover:text-blue-700 font-medium text-xl">Inicio</a>
-                    </li>
-                    <li><a href="modelos-senora.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Señora</a></li>
-                    <li><a href="modelos-caballero.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Modelos Caballero</a></li>
-                    <li><a href="novedades.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Novedades</a></li>
-                    <li><a href="componentes-calzado.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Componentes del Calzado</a>
-                    </li>
-                    <li><a href="cartas-colores.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Cartas de Colores</a></li>
-                    <li><a href="sobre-nosotros.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Sobre Nosotros</a></li>
-                    <li><a href="contacto.html"
-                            class="text-gray-600 hover:text-blue-700 font-medium text-xl">Contacto</a></li>
-                    <li><a href="carrito.html" class="text-blue-700 font-medium text-xl">Carrito</a></li>
-                </ul>
-            </nav>
+    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-800">Arpiedi Web</a>
+            <a href="index.html" class="text-gray-600 hover:text-blue-600">Seguir comprando</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">🛒 Solicitud de Pedido Personalizado</h1>
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Tu Carrito</h1>
 
-        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-4xl mx-auto">
-            <div id="successMessage"
-                class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
-                <strong>¡Éxito!</strong> Tu pedido ha sido enviado correctamente. Nos pondremos en contacto contigo
-                pronto.
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Lista de Productos -->
+            <div class="lg:col-span-2 space-y-4" id="cartItemsContainer">
+                <p class="text-gray-500 text-center py-8">Tu carrito está vacío.</p>
             </div>
 
-            <div id="errorMessage"
-                class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
-                <strong>Error:</strong> <span id="errorText"></span>
-            </div>
-
-            <form id="pedidoForm">
-                <!-- Datos del Cliente -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">👤 Datos del Cliente</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Nombre Completo *</label>
-                            <input type="text" name="cliente_nombre" required
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Email *</label>
-                            <input type="email" name="cliente_email" required
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Teléfono</label>
-                            <input type="tel" name="cliente_telefono"
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Dirección de Envío</label>
-                            <input type="text" name="cliente_direccion"
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
+            <!-- Resumen y Formulario -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Resumen</h2>
+                    <div class="flex justify-between mb-2">
+                        <span>Subtotal</span>
+                        <span id="subtotalDisplay">0.00 €</span>
                     </div>
-                </div>
-
-                <!-- Productos del Pedido -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">👟 Productos del Pedido</h2>
-                    <div id="productosContainer">
-                        <div class="producto-item bg-gray-50 p-4 rounded-lg mb-4">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 font-semibold mb-2">Nombre del Producto *</label>
-                                    <input type="text" name="producto_nombre[]" required
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="Ej: Zapato ortopédico modelo X">
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700 font-semibold mb-2">Cantidad *</label>
-                                    <input type="number" name="producto_cantidad[]" min="1" value="1" required
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="flex justify-between mb-4 font-bold text-lg">
+                        <span>Total</span>
+                        <span id="totalDisplay">0.00 €</span>
                     </div>
-                    <button type="button" onclick="agregarProducto()"
-                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
-                        ➕ Agregar Otro Producto
-                    </button>
+
+                    <hr class="my-4 border-gray-100">
+
+                    <form id="checkoutForm" class="space-y-3">
+                        <h3 class="font-bold text-sm uppercase text-gray-500">Datos de Envío</h3>
+                        <input type="text" id="nombre" placeholder="Nombre completo" required class="w-full p-2 border rounded text-sm">
+                        <input type="email" id="email" placeholder="Email" required class="w-full p-2 border rounded text-sm">
+                        <input type="text" id="direccion" placeholder="Dirección de envío" required class="w-full p-2 border rounded text-sm">
+                        <input type="tel" id="telefono" placeholder="Teléfono" required class="w-full p-2 border rounded text-sm">
+                        
+                        <button type="submit" id="btnComprar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition-colors mt-4">
+                            Confirmar Pedido
+                        </button>
+                    </form>
                 </div>
-
-                <!-- Notas Adicionales -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">📝 Notas Adicionales</h2>
-                    <textarea name="notas" rows="4"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Especificaciones adicionales, colores, materiales, etc."></textarea>
-                </div>
-
-                <!-- Botón de Envío -->
-                <div class="text-center">
-                    <button type="submit" id="submitBtn"
-                        class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-12 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
-                        <span id="btnText">📤 Enviar Pedido</span>
-                        <span id="btnLoading" class="hidden">⏳ Enviando...</span>
-                    </button>
-                </div>
-
-                <p class="text-center text-sm text-gray-500 mt-6">
-                    * Campos obligatorios. El precio final se determinará según las especificaciones de tu pedido.
-                </p>
-            </form>
-
-            <div class="mt-8 p-4 bg-blue-50 rounded-lg">
-                <p class="text-center text-gray-700">
-                    ℹ️ <strong>Nota:</strong> Si aún no has tomado tus medidas,
-                    <a href="solicitud-medida.html" class="text-blue-600 hover:underline font-semibold">haz clic
-                        aquí</a>
-                    para completar el formulario de medidas.
-                </p>
             </div>
         </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 Arpiedi®. Todos los derechos reservados.</p>
-            <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="text-gray-400 hover:text-white">Política de Privacidad</a>
-                <a href="#" class="text-gray-400 hover:text-white">Términos y Condiciones</a>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        const API_URL = 'http://localhost/arpiedi-tienda-online-main/api';
-        const PRECIO_BASE = 150; // Precio base por producto
-
-        function agregarProducto() {
-            const container = document.getElementById('productosContainer');
-            const nuevoProducto = document.createElement('div');
-            nuevoProducto.className = 'producto-item bg-gray-50 p-4 rounded-lg mb-4';
-            nuevoProducto.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="md:col-span-2">
-                        <label class="block text-gray-700 font-semibold mb-2">Nombre del Producto *</label>
-                        <input type="text" name="producto_nombre[]" required
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Ej: Zapato ortopédico modelo X">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Cantidad *</label>
-                        <div class="flex gap-2">
-                            <input type="number" name="producto_cantidad[]" min="1" value="1" required
-                                class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <button type="button" onclick="this.closest('.producto-item').remove()"
-                                class="bg-red-500 hover:bg-red-600 text-white px-3 rounded-lg">
-                                🗑️
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.appendChild(nuevoProducto);
+        // --- LÓGICA DEL CARRITO ---
+        // 1. Cargar carrito del localStorage
+        let cart = JSON.parse(localStorage.getItem('arpiediCart')) || [];
+        
+        // Simulación de datos para pruebas (Borrar en producción si ya tienes datos reales)
+        if(cart.length === 0) {
+            // cart = [{ id: 'TEST-1', name: 'Zapato Prueba Web', price: 50.00, quantity: 1, size: '42' }];
         }
 
-        document.getElementById('pedidoForm').addEventListener('submit', async (e) => {
+        const renderCart = () => {
+            const container = document.getElementById('cartItemsContainer');
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-12 bg-white rounded">Tu carrito está vacío.</p>';
+                document.getElementById('btnComprar').disabled = true;
+                document.getElementById('btnComprar').classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => {
+                const totalItem = item.price * item.quantity;
+                subtotal += totalItem;
+                return `
+                    <div class="flex gap-4 bg-white p-4 rounded shadow-sm items-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded flex-shrink-0 overflow-hidden">
+                            ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : '<div class="w-full h-full flex items-center justify-center text-gray-300">Img</div>'}
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800">${item.name}</h3>
+                            <p class="text-sm text-gray-500">Talla: ${item.size || 'Unica'} | x${item.quantity}</p>
+                            <button onclick="removeItem(${index})" class="text-red-500 text-xs hover:underline mt-1">Eliminar</button>
+                        </div>
+                        <div class="font-bold text-gray-700">${totalItem.toFixed(2)} €</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2) + ' €';
+            document.getElementById('totalDisplay').innerText = subtotal.toFixed(2) + ' €';
+            document.getElementById('btnComprar').disabled = false;
+            document.getElementById('btnComprar').classList.remove('opacity-50', 'cursor-not-allowed');
+        };
+
+        const removeItem = (index) => {
+            cart.splice(index, 1);
+            localStorage.setItem('arpiediCart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        // --- CONEXIÓN CON TU BASE DE DATOS LOCAL ---
+        // IMPORTANTE: Para que esto funcione desde internet, necesitarás exponer tu localhost 
+        // (usando ngrok o subiendo la API a un servidor real).
+        // Por ahora, como estás probando en TU ordenador, funcionará si abres este HTML en tu navegador.
+        const API_URL = 'http://localhost:3000/api/pedidos'; 
+
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            const btn = document.getElementById('btnComprar');
+            const originalText = btn.innerText;
+            btn.innerText = 'Procesando...';
+            btn.disabled = true;
 
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const btnLoading = document.getElementById('btnLoading');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
+            const cliente = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                direccion: document.getElementById('direccion').value,
+                telefono: document.getElementById('telefono').value
+            };
 
-            // Deshabilitar botón y mostrar loading
-            submitBtn.disabled = true;
-            btnText.classList.add('hidden');
-            btnLoading.classList.remove('hidden');
-            successMessage.classList.add('hidden');
-            errorMessage.classList.add('hidden');
+            const pedido = {
+                cliente: cliente,
+                items: cart
+            };
 
             try {
-                const formData = new FormData(e.target);
-
-                // Construir array de items
-                const nombres = formData.getAll('producto_nombre[]');
-                const cantidades = formData.getAll('producto_cantidad[]');
-
-                const items = nombres.map((nombre, index) => ({
-                    producto_nombre: nombre,
-                    cantidad: parseInt(cantidades[index]),
-                    precio_unitario: PRECIO_BASE
-                }));
-
-                const data = {
-                    cliente_nombre: formData.get('cliente_nombre'),
-                    cliente_email: formData.get('cliente_email'),
-                    cliente_telefono: formData.get('cliente_telefono'),
-                    cliente_direccion: formData.get('cliente_direccion'),
-                    items: items
-                };
-
-                const response = await fetch(`${API_URL}/pedidos/crear.php`, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(pedido)
                 });
 
-                const result = await response.json();
+                const data = await response.json();
 
-                if (result.success) {
-                    successMessage.classList.remove('hidden');
-                    e.target.reset();
-                    // Resetear a un solo producto
-                    document.getElementById('productosContainer').innerHTML = `
-                        <div class="producto-item bg-gray-50 p-4 rounded-lg mb-4">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 font-semibold mb-2">Nombre del Producto *</label>
-                                    <input type="text" name="producto_nombre[]" required
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="Ej: Zapato ortopédico modelo X">
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700 font-semibold mb-2">Cantidad *</label>
-                                    <input type="number" name="producto_cantidad[]" min="1" value="1" required
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (response.ok && data.success) {
+                    Swal.fire({
+                        title: '¡Pedido Recibido!',
+                        text: `Tu pedido #${data.id} se ha guardado correctamente.`,
+                        icon: 'success',
+                        confirmButtonText: 'Genial'
+                    }).then(() => {
+                        localStorage.removeItem('arpiediCart');
+                        window.location.href = 'index.html';
+                    });
                 } else {
-                    throw new Error(result.message || 'Error al enviar el pedido');
+                    throw new Error(data.error || 'Error desconocido');
                 }
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('errorText').textContent = error.message;
-                errorMessage.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                console.error(error);
+                Swal.fire({
+                    title: 'Error de conexión',
+                    text: 'No pudimos conectar con el servidor. Asegúrate de que tu App Local (localhost:3000) está encendida.',
+                    icon: 'error'
+                });
             } finally {
-                submitBtn.disabled = false;
-                btnText.classList.remove('hidden');
-                btnLoading.classList.add('hidden');
+                btn.innerText = originalText;
+                btn.disabled = false;
             }
         });
 
-        // Cargar modelo desde URL si existe
-        document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const modelName = urlParams.get('model');
-
-            if (modelName) {
-                const decodedModelName = decodeURIComponent(modelName);
-                const primerProducto = document.querySelector('input[name="producto_nombre[]"]');
-                if (primerProducto) {
-                    primerProducto.value = decodedModelName;
-                }
-            }
-        });
+        // Inicializar
+        renderCart();
     </script>
-
 </body>
-
 </html>
