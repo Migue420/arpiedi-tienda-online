@@ -3,38 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arpiedi - Calzado Ortopédico a Medida</title>
+    <title>Arpiedi - Calzado a Medida y Ortopédico</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8; /* Light gray background */
-        }
-        .section-title {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 8px;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50%;
-            height: 3px;
-            background-color: #2C3E50; /* Dark blue accent */
-            border-radius: 2px;
-        }
-        /* Estilos para el slider del banner */
-        .banner-slider {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 0.75rem; /* rounded-lg */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
-            height: 500px; /* Altura fija para el slider, ajustar según sea necesario */
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f8f8; }
+        .nav-link { @apply text-gray-600 hover:text-blue-700 font-medium transition-colors; }
+        .nav-link.active { @apply text-blue-700 font-bold; }
+        .hero-card { @apply bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all border border-gray-100 flex flex-col items-center text-center group cursor-pointer; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- BARRA SUPERIOR -->
+    <section class="bg-white py-4 border-b border-gray-100">
+        <div class="container mx-auto px-4 flex justify-center md:justify-between items-center">
+            <a href="index.html" class="block">
+                <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Logo de Arpiedi" class="h-12 md:h-16 object-contain">
+            </a>
+            <!-- Icono Carrito (Visible en escritorio) -->
+            <a href="carrito.html" class="hidden md:flex items-center gap-2 text-gray-600 hover:text-blue-700 font-bold bg-gray-50 px-4 py-2 rounded-full transition-colors">
+                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                <span>Carrito</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- MENÚ DE NAVEGACIÓN PRINCIPAL -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <nav class="py-4 overflow-x-auto">
+                <ul class="flex items-center justify-center space-x-6 md:space-x-8 whitespace-nowrap min-w-max">
+                    <li><a href="index.html" class="nav-link active">Inicio</a></li>
+                    <li><a href="modelos-senora.html" class="nav-link">Modelos Señora</a></li>
+                    <li><a href="modelos-caballero.html" class="nav-link">Modelos Caballero</a></li>
+                    
+                    <!-- NUEVO: TOMA DE MEDIDAS (Resaltado) -->
+                    <li>
+                        <a href="formulario-medidas.html" class="flex items-center gap-2 bg-blue-50 text-blue-800 px-3 py-1 rounded-md hover:bg-blue-100 border border-blue-200 font-bold transition-all">
+                            <i data-lucide="ruler" class="w-4 h-4"></i>
+                            Toma de Medidas
+                        </a>
+                    </li>
+
+                    <li><a href="componentes-calzado.html" class="nav-link">Componentes</a></li>
+                    <li><a href="gestion-articulos.html" class="nav-link text-sm opacity-75">Gestión Artículos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow container mx-auto px-4 py-12">
+        
+        <!-- Banner de Bienvenida -->
+        <div class="text-center mb-16 max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 tracking-tight">Calzado Ortopédico a Medida</h1>
+            <p class="text-lg text-gray-600">Artesanía, tecnología y salud en cada paso. Gestiona tus pedidos o explora nuestro catálogo digital.</p>
+        </div>
+
+        <!-- Grid de Accesos Rápidos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Tarjeta 1: Nueva Medición -->
+            <a href="formulario-medidas.html" class="hero-card border-blue-200 bg-blue-50/50">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="footprints" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-bold text-blue-900 mb-2">Nueva Ficha Técnica</h3>
+                <p class="text-sm text-gray-600">Formulario digital para toma de medidas y especificaciones de taller.</p>
+            </a>
+
+            <!-- Tarjeta 2: Catálogo Señora -->
+            <a href="modelos-senora.html" class="hero-card">
+                <div class="w-16 h-16 bg-pink-50 rounded-full flex items-center justify-center text-pink-500 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="heart" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Colección Señora</h3>
+                <p class="text-sm text-gray-600">Explora los últimos modelos y diseños ortopédicos para señora.</p>
+            </a>
+
+            <!-- Tarjeta 3: Catálogo Caballero -->
+            <a href="modelos-caballero.html" class="hero-card">
+                <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 mb-4 group-hover:scale-110 transition-transform">
+                    <i data-lucide="briefcase" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Colección Caballero</h3>
+                <p class="text-sm text-gray-600">Calzado robusto y elegante adaptado a tus necesidades.</p>
+            </a>
+
+        </div>
+
+        <!-- Sección de Ayuda / Info -->
+        <div class="mt-20 bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Gestión Profesional para Ortopedias</h2>
+                <p class="text-gray-600 mb-6">
+                    Utiliza nuestra plataforma para enviar pedidos directamente a fábrica, consultar el estado de fabricación y acceder a la documentación técnica.
+                </p>
+                <div class="flex gap-4">
+                    <a href="gestion-articulos.html" class="px-6 py-3 bg-gray-800 text-white rounded-lg font-bold hover:bg-black transition-colors">
+                        Panel de Gestión
+                    </a>
+                    <a href="https://wa.me/34614225325" target="_blank" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-gray-50 flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> Soporte WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 flex justify-center">
+                <!-- Espacio para una imagen decorativa o logo -->
+                <div class="w-48 h-48 bg-gray-50 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                    <span class="text-4xl">👞</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <img src="https://Migue420.github.io/arpiedi-tienda-online/assets/images/banner%20y%20slayer/ARPIEDI%20con%20texto.png" alt="Arpiedi" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition-all">
+            <p class="text-gray-400 text-sm mb-6">&copy; 2025 Arpiedi®. Calzado a Medida. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">Política de Privacidad</a>
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">Contacto</a>
+                <a href="http://localhost:3000" class="text-blue-400 hover:text-blue-300 transition-colors font-mono">Acceso Local (Fábrica)</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Inicializar Iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>        }
         .banner-slide {
             width: 100%;
             height: 100%;
@@ -538,3 +643,4 @@
     </script>
 </body>
 </html>
+
