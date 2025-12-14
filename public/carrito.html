@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Arpiedi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f8f8; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <span class="text-2xl font-bold text-gray-800">Arpiedi Web</span>
+            <a href="/" class="text-gray-600 hover:text-blue-600">Volver al Inicio</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Tu Carrito</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-4" id="cartItemsContainer">
+                <p class="text-gray-500 text-center py-8">Cargando carrito...</p>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Resumen</h2>
+                    <div class="flex justify-between mb-2">
+                        <span>Subtotal</span>
+                        <span id="subtotalDisplay">0.00 €</span>
+                    </div>
+                    <div class="flex justify-between mb-4 font-bold text-lg">
+                        <span>Total</span>
+                        <span id="totalDisplay">0.00 €</span>
+                    </div>
+
+                    <hr class="my-4 border-gray-100">
+
+                    <form id="checkoutForm" class="space-y-3">
+                        <h3 class="font-bold text-sm uppercase text-gray-500">Datos de Envío</h3>
+                        <input type="text" id="nombre" placeholder="Nombre completo" required class="w-full p-2 border rounded text-sm">
+                        <input type="email" id="email" placeholder="Email" required class="w-full p-2 border rounded text-sm">
+                        <input type="text" id="direccion" placeholder="Dirección de envío" required class="w-full p-2 border rounded text-sm">
+                        <input type="tel" id="telefono" placeholder="Teléfono" required class="w-full p-2 border rounded text-sm">
+                        
+                        <button type="submit" id="btnComprar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition-colors mt-4">
+                            Confirmar Pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 1. Cargar carrito (Simulado si está vacío para probar)
+        let cart = JSON.parse(localStorage.getItem('arpiediCart')) || [];
+        
+        // --- MODO PRUEBA: Si el carrito está vacío, añadimos un zapato falso para que puedas probar ---
+        if (cart.length === 0) {
+            cart = [{ id: 'TEST-1', name: 'Zapato Prueba Web', price: 50.00, quantity: 1, size: '42' }];
+            console.log("Modo Prueba: Añadido producto ficticio al carrito");
+        }
+
+        const renderCart = () => {
+            const container = document.getElementById('cartItemsContainer');
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-12 bg-white rounded">Tu carrito está vacío.</p>';
+                document.getElementById('btnComprar').disabled = true;
+                document.getElementById('btnComprar').classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => {
+                const totalItem = item.price * item.quantity;
+                subtotal += totalItem;
+                return `
+                    <div class="flex gap-4 bg-white p-4 rounded shadow-sm items-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded flex-shrink-0 overflow-hidden bg-gray-200 flex items-center justify-center text-gray-400">
+                            ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : 'IMG'}
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800">${item.name}</h3>
+                            <p class="text-sm text-gray-500">Talla: ${item.size || 'Unica'} | x${item.quantity}</p>
+                            <button onclick="removeItem(${index})" class="text-red-500 text-xs hover:underline mt-1">Eliminar</button>
+                        </div>
+                        <div class="font-bold text-gray-700">${totalItem.toFixed(2)} €</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2) + ' €';
+            document.getElementById('totalDisplay').innerText = subtotal.toFixed(2) + ' €';
+            document.getElementById('btnComprar').disabled = false;
+            document.getElementById('btnComprar').classList.remove('opacity-50', 'cursor-not-allowed');
+        };
+
+        const removeItem = (index) => {
+            cart.splice(index, 1);
+            localStorage.setItem('arpiediCart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        // --- CONEXIÓN MANUAL ---
+        // Usamos la ruta completa http://localhost:3000 para que funcione
+        // incluso si el archivo se abre directamente o en modo vista previa.
+        const API_URL = 'http://localhost:3000/api/pedidos'; 
+
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnComprar');
+            const originalText = btn.innerText;
+            btn.innerText = 'Procesando...';
+            btn.disabled = true;
+
+            const pedido = {
+                cliente: {
+                    nombre: document.getElementById('nombre').value,
+                    email: document.getElementById('email').value,
+                    direccion: document.getElementById('direccion').value,
+                    telefono: document.getElementById('telefono').value
+                },
+                items: cart
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pedido)
+                });
+
+                if (!response.ok) throw new Error(`Error ${response.status}`);
+
+                const data = await response.json();
+
+                if (data.success) {
+                    Swal.fire({
+                        title: '¡Pedido Recibido!',
+                        text: `Tu pedido #${data.id} se ha guardado correctamente en la base de datos.`,
+                        icon: 'success'
+                    }).then(() => {
+                        localStorage.removeItem('arpiediCart');
+                        // Recargar para ver carrito vacío
+                        location.reload(); 
+                    });
+                } else {
+                    throw new Error(data.error);
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                
+                let msg = 'No se pudo guardar el pedido.';
+                if (error.message.includes('Failed to fetch')) {
+                    msg += ' Asegúrate de que la aplicación (localhost:3000) está encendida.';
+                }
+
+                Swal.fire({
+                    title: 'Error',
+                    text: msg,
+                    icon: 'error'
+                });
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Arpiedi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f8f8; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <span class="text-2xl font-bold text-gray-800">Arpiedi Web</span>
+            <a href="/" class="text-gray-600 hover:text-blue-600">Volver al Inicio</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Tu Carrito</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-4" id="cartItemsContainer">
+                <p class="text-gray-500 text-center py-8">Cargando carrito...</p>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Resumen</h2>
+                    <div class="flex justify-between mb-2">
+                        <span>Subtotal</span>
+                        <span id="subtotalDisplay">0.00 €</span>
+                    </div>
+                    <div class="flex justify-between mb-4 font-bold text-lg">
+                        <span>Total</span>
+                        <span id="totalDisplay">0.00 €</span>
+                    </div>
+
+                    <hr class="my-4 border-gray-100">
+
+                    <form id="checkoutForm" class="space-y-3">
+                        <h3 class="font-bold text-sm uppercase text-gray-500">Datos de Envío</h3>
+                        <input type="text" id="nombre" placeholder="Nombre completo" required class="w-full p-2 border rounded text-sm">
+                        <input type="email" id="email" placeholder="Email" required class="w-full p-2 border rounded text-sm">
+                        <input type="text" id="direccion" placeholder="Dirección de envío" required class="w-full p-2 border rounded text-sm">
+                        <input type="tel" id="telefono" placeholder="Teléfono" required class="w-full p-2 border rounded text-sm">
+                        
+                        <button type="submit" id="btnComprar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition-colors mt-4">
+                            Confirmar Pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 1. Cargar carrito (Simulado si está vacío para probar)
+        let cart = JSON.parse(localStorage.getItem('arpiediCart')) || [];
+        
+        // --- MODO PRUEBA: Si el carrito está vacío, añadimos un zapato falso para que puedas probar ---
+        if (cart.length === 0) {
+            cart = [{ id: 'TEST-1', name: 'Zapato Prueba Web', price: 50.00, quantity: 1, size: '42' }];
+            console.log("Modo Prueba: Añadido producto ficticio al carrito");
+        }
+
+        const renderCart = () => {
+            const container = document.getElementById('cartItemsContainer');
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-12 bg-white rounded">Tu carrito está vacío.</p>';
+                document.getElementById('btnComprar').disabled = true;
+                document.getElementById('btnComprar').classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => {
+                const totalItem = item.price * item.quantity;
+                subtotal += totalItem;
+                return `
+                    <div class="flex gap-4 bg-white p-4 rounded shadow-sm items-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded flex-shrink-0 overflow-hidden bg-gray-200 flex items-center justify-center text-gray-400">
+                            ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : 'IMG'}
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800">${item.name}</h3>
+                            <p class="text-sm text-gray-500">Talla: ${item.size || 'Unica'} | x${item.quantity}</p>
+                            <button onclick="removeItem(${index})" class="text-red-500 text-xs hover:underline mt-1">Eliminar</button>
+                        </div>
+                        <div class="font-bold text-gray-700">${totalItem.toFixed(2)} €</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2) + ' €';
+            document.getElementById('totalDisplay').innerText = subtotal.toFixed(2) + ' €';
+            document.getElementById('btnComprar').disabled = false;
+            document.getElementById('btnComprar').classList.remove('opacity-50', 'cursor-not-allowed');
+        };
+
+        const removeItem = (index) => {
+            cart.splice(index, 1);
+            localStorage.setItem('arpiediCart', JSON.stringify(cart));
+            renderCart();
+        };
+
+        // --- CONEXIÓN MANUAL ---
+        // Usamos la ruta completa http://localhost:3000 para que funcione
+        // incluso si el archivo se abre directamente o en modo vista previa.
+        const API_URL = 'http://localhost:3000/api/pedidos'; 
+
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnComprar');
+            const originalText = btn.innerText;
+            btn.innerText = 'Procesando...';
+            btn.disabled = true;
+
+            const pedido = {
+                cliente: {
+                    nombre: document.getElementById('nombre').value,
+                    email: document.getElementById('email').value,
+                    direccion: document.getElementById('direccion').value,
+                    telefono: document.getElementById('telefono').value
+                },
+                items: cart
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pedido)
+                });
+
+                if (!response.ok) throw new Error(`Error ${response.status}`);
+
+                const data = await response.json();
+
+                if (data.success) {
+                    Swal.fire({
+                        title: '¡Pedido Recibido!',
+                        text: `Tu pedido #${data.id} se ha guardado correctamente en la base de datos.`,
+                        icon: 'success'
+                    }).then(() => {
+                        localStorage.removeItem('arpiediCart');
+                        // Recargar para ver carrito vacío
+                        location.reload(); 
+                    });
+                } else {
+                    throw new Error(data.error);
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                
+                let msg = 'No se pudo guardar el pedido.';
+                if (error.message.includes('Failed to fetch')) {
+                    msg += ' Asegúrate de que la aplicación (localhost:3000) está encendida.';
+                }
+
+                Swal.fire({
+                    title: 'Error',
+                    text: msg,
+                    icon: 'error'
+                });
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // Cargar al inicio
+        renderCart();
+    </script>
+</body>
+</html>
+            }
+        });
+
+        // Cargar al inicio
+        renderCart();
+    </script>
+</body>
+</html>
